@@ -30,7 +30,7 @@ def mangohud():
 def install_AZ():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/AZ-lite.tar.xz")
     os.system("tar -xJf AZ-lite.tar.xz -C $PREFIX/glibc/")
-    os.remove("AZ.tar.xz")
+    os.remove("AZ-lite.tar.xz")
 def install_box():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/box.tar.xz")
     os.system("tar -xJf box.tar.xz -C $PREFIX/glibc/bin")
