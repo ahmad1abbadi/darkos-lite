@@ -9,8 +9,6 @@ import sys, urllib.request, urllib.error
 def extract_and_delete_tar_files():
     search_paths = [
         "/data/data/com.termux/files/usr/glibc/opt/temp/box",
-        "/data/data/com.termux/files/usr/glibc/opt/wine/5",
-        "/data/data/com.termux/files/usr/glibc/opt/wine/4",
         "/data/data/com.termux/files/usr/glibc/opt/wine/2",
         "/data/data/com.termux/files/usr/glibc/opt/wine/3"
     ]
@@ -35,12 +33,10 @@ def load_conf():
         "/data/data/com.termux/files/usr/glibc/opt/wine/os.conf",
         "/data/data/com.termux/files/usr/glibc/opt/darkos/res.conf",
         "/sdcard/darkos/darkos_dynarec.conf",
-        "/sdcard/darkos/darkos_dynarec_box86.conf",
         "/sdcard/darkos/darkos_custom.conf"
     ]
     for conf_path in conf_paths:
         exec(open(conf_path).read(), globals())
-    os.system("chmod +x $PREFIX/glibc/bin/box86")
     os.system("chmod +x $PREFIX/glibc/bin/box64")
 def create_wine_prefix():
     if not os.path.exists(f"/data/data/com.termux/files/usr/glibc/opt/wine/{container}/wine/bin/wine64"):
