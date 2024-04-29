@@ -5,6 +5,9 @@ import time
 import threading
 import shutil
 import sys, urllib.request, urllib.error
+import tarfile
+import socket
+import fnmatch
 current_version = "0.911"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/currently%20version.txt'
 def start_darkos():
