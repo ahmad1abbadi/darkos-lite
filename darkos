@@ -1,0 +1,52 @@
+#!/bin/bash
+clear
+python3 $PREFIX/bin/photo.py $@
+echo " PRESS 1 TO ENTER SAFE MODE ......."
+read -t 2 -n1 -s key
+
+if [[ "$key" == "1" ]]; then
+    echo " Safe MODE DARKOS.....STARTING"
+    termux-x11 :0 &>/dev/null &
+    pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1 &>/dev/null
+    sleep 1
+    python3 $PREFIX/bin/darkos.py $@
+    exit 0
+elif [[ "$key" == " " ]]; then
+    echo " Booting DARKOS 🖤"
+fi
+
+old_version="0.911"
+new_version=$(curl -s https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/currently%20version.txt)
+
+if ping -q -c 1 -W 1 google.com >/dev/null; then
+    echo " Welcome 🤗"
+    if awk 'BEGIN{exit !('$old_version' < '$new_version')}'; then
+        echo ""
+        echo " update available ⏫....to version : $new_version" 
+        sleep 3
+else
+        echo " installed version : $old_version"
+        sleep 1
+    fi
+else
+    echo " no internet connection 😔🛜"
+fi
+
+if [[ -v LD_PRELOAD ]]; then
+    unset LD_PRELOAD
+fi
+echo ""
+echo " Booting DARKOS 🖤"
+
+termux-x11 :0 &>/dev/null &
+pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1 &>/dev/null
+sleep 1
+
+windows10="$PREFIX/glibc/opt/darkos/windows_10.txt"
+
+if [ -f "$windows10" ]; then
+    python3 $PREFIX/glibc/opt/scripts/windows_10.py $@
+else
+    python3 $PREFIX/bin/run-darkos.py $@
+fi
+
