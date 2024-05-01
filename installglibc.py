@@ -65,6 +65,9 @@ def edit_bashrc():
 def create_prefix():
     conf_path = f"/data/data/com.termux/files/usr/glibc/opt/wine/1/os.conf"
     wine_prefix = f"/data/data/com.termux/files/usr/glibc/opt/wine/1/.wine"
+    if not os.path.exists(f"/data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine64"):
+        os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine $PREFIX/glibc/bin/wine64")
+        os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine $PREFIX/glibc/opt/wine/1/wine/bin/wine64")
     os.system("ln -s $PREFIX/glibc/opt/wine/1/wine/bin/wine $PREFIX/glibc/bin/wine &>/dev/null")
     os.system("ln -s $PREFIX/glibc/opt/wine/1/wine/bin/wine64 $PREFIX/glibc/bin/wine64 &>/dev/null")
     os.system("ln -s $PREFIX/glibc/opt/wine/1/wine/bin/wineserver $PREFIX/glibc/bin/wineserver &>/dev/null")
