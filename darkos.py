@@ -338,10 +338,7 @@ def recreate_prefix_wineAZ():
 def check_config_wine():
     config_folder = "/sdcard/darkos"
     exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
-def Compile():
-    os.system("apt install cmake-glibc make-glibc python-glibc")
-    os.system("pkg install -y git; unset LD_PRELOAD; export GLIBC_PREFIX=/data/data/com.termux/files/usr/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL=ON -DSD845=ON; make -j8; make install")
-def install_wine9():
+def install_wine9(): 
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/wine-default.tar.xz")
     os.system("tar -xJf wine-default.tar.xz -C $PREFIX/glibc/opt/wine/1")
     os.remove("wine-default.tar.xz")
@@ -396,12 +393,11 @@ def change_setting():
     print("settings ⚙️")
     print("1) Update OS 👑")
     print("2) Repair DARKOS-lite files 🔧")
-    print("3) Change box64 version 📥")
+    print("3) winetricks ⛑️")
     print("4) Delete prefix 🪡")
     print("5) Change auto start setting 🖱️")
     print("6) Debug mode 🐞") 
-    print("7) winetricks ⛑️")
-    print("8) Boost cpu 🔥 (needed root in some devices)")
+    print("7) Boost cpu 🔥 (needed root in some devices)")
 
     
     print("else) Back 🔙")
@@ -462,18 +458,13 @@ def change_setting():
         box_version()
     elif choice == "6":
         os.system("python3 $PREFIX/bin/debug-darkos.py")
-    elif choice == "r":
-        print("to contact developer via telegram channel....(https://t.me/DARKOS4android)")
-        back = input("🔙 = 1")
-        if back == "1":
-            change_setting()
     elif choice == "4":
         recreate_prefix_wineAZ()
     elif choice == "5":
         auto_start()
-    elif choice == "7":
+    elif choice == "3":
         winetricks()
-    elif choice == "8":
+    elif choice == "7":
         os.system("clear")
         photo()
         print("loading.........")
@@ -490,37 +481,6 @@ def change_setting():
         print("")
         print("check the new session for more info 👀 ")
         time.sleep(5)
-        change_setting()
-def box_version():
-    os.system("clear")
-    photo()
-    print("select box version:")
-    print("")
-    print("1) SAFE-BOX")
-    print("2) Compile and UPDATED BOX64")
-    print("else) CANCEL AND BACK")
-    print("")
-    choice = input()
-    file_path64 = "/data/data/com.termux/files/usr/glibc/bin/box64"
-    if choice not in ["1", "2"]:
-        change_setting()
-    elif choice == "1":
-        if os.path.exists(file_path64):
-            os.remove(file_path64)
-        os.system("tar -xJf $PREFIX/glibc/opt/box/safe-box.tar.xz -C $PREFIX/glibc/bin/")
-        os.system("chmod +x $PREFIX/glibc/bin/box64") 
-        change_setting()
-    elif choice == "2":
-        if os.path.exists(file_path64):
-            os.remove(file_path64)
-        print("compiling....")
-        os.system("apt install cmake-glibc make-glibc python-glibc -y &>/dev/null")
-        Compile()
-        os.system("mv //data/data/com.termux/files/home/box64/build/box64 $PREFIX/glibc/bin/")
-        os.system("chmod +x $PREFIX/glibc/bin/box64")
-        shutil.rmtree('/data/data/com.termux/files/home/box64')
-        print("done")
-        time.sleep(2)
         change_setting()
 def reload():
     file_path = os.path.expanduser("~/.termux/termux.properties")
