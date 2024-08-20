@@ -31,11 +31,11 @@ fi
     python3 $PREFIX/bin/darkos.py $@
     exit 0
 elif [[ "$key" == " " ]]; then
-    echo "${G}${BOLD} Booting DARKOS 🖤 "${W}
+    echo "${G}${BOLD} Booting DARKOS-lite 🖤 "${W}
 fi
 
 old_version="0.1"
-new_version=$(curl -s https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/currently%20version.txt)
+new_version=$(curl -s https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt)
 
 if ping -q -c 1 -W 1 google.com >/dev/null; then
     echo "${G}${BOLD} Welcome 🤗"${W}
