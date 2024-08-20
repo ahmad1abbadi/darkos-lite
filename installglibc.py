@@ -73,7 +73,6 @@ def create_prefix():
     os.system("ln -s $PREFIX/glibc/opt/wine/1/wine/bin/wineserver $PREFIX/glibc/bin/wineserver &>/dev/null")
     os.system("ln -s $PREFIX/glibc/opt/wine/1/wine/bin/wineboot $PREFIX/glibc/bin/wineboot &>/dev/null")
     os.system("ln -s $PREFIX/glibc/opt/wine/1/wine/bin/winecfg $PREFIX/glibc/bin/winecfg &>/dev/null")
-    os.system("chmod +x $PREFIX/glibc/bin/box86")
     os.system("chmod +x $PREFIX/glibc/bin/box64")
     os.system("chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine")
     os.system("chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine64")
