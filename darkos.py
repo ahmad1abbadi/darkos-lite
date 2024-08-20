@@ -8,8 +8,8 @@ import sys, urllib.request, urllib.error
 import tarfile
 import socket
 import fnmatch
-current_version = "0.911"
-url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/currently%20version.txt'
+current_version = "0.1"
+url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def start_darkos():
     os.system("clear")
     if "LD_PRELOAD" in os.environ:
@@ -319,15 +319,11 @@ def recreate_prefix_wineAZ():
         print(" 2) remove prefix on container 2 ")
     if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/3/.wine"):
         print(" 3) remove prefix on container 3")
-    if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/4/.wine"):
-        print(" 4) remove prefix on container 4 ")
-    if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/5/.wine"):
-        print(" 5) remove prefix on container 5")
     print("")
     print(" else) back to settings menu")
     print("")
     user_input = input()
-    if user_input not in ["1", "2", "3", "4", "5"]:
+    if user_input not in ["1", "2", "3"]:
         change_setting()
     elif user_input == "1":
          shutil.rmtree('/data/data/com.termux/files/usr/glibc/opt/wine/1/.wine')
@@ -338,38 +334,7 @@ def recreate_prefix_wineAZ():
     elif user_input == "3":
          shutil.rmtree('/data/data/com.termux/files/usr/glibc/opt/wine/3/.wine')
          print(f'done')
-    elif user_input == "4":
-         shutil.rmtree('/data/data/com.termux/files/usr/glibc/opt/wine/4/.wine')
-         print(f'done')
-    elif user_input == "5":
-         shutil.rmtree('/data/data/com.termux/files/usr/glibc/opt/wine/5/.wine')
-         print(f'done')
     main_menu()
-def xinput_support():
-    print("Select the version of Wine you want to add xinput support for:")
-    print("")
-    for i in range(1, 6):
-        wine_path = f"/data/data/com.termux/files/usr/glibc/opt/wine/{i}/.wine"
-        if os.path.exists(wine_path):
-            print(f" {i}) Add xinput support on container {i}")
-    print("")
-    print(" Else) Back to the settings menu")
-    print("")
-    user_input = input("Enter your choice: ")
-    if user_input not in ["1", "2", "3", "4", "5"]:
-        # Handle invalid input
-        change_setting()
-    else:
-        wine_container = int(user_input)
-        wine_lib64_path = f"/data/data/com.termux/files/usr/glibc/opt/wine/{wine_container}/wine/lib64"
-        wine_lib_path = f"/data/data/com.termux/files/usr/glibc/opt/wine/{wine_container}/wine/lib/wine"
-        if os.path.exists(wine_lib64_path):
-            os.system(f"tar -xJf $PREFIX/glibc/opt/darkos/XinputBridge_ge.tar.xz -C /data/data/com.termux/files/usr/glibc/opt/wine/{wine_container}/wine/ &>/dev/null")
-        else:
-            os.system(f"tar -xJf $PREFIX/glibc/opt/darkos/XinputBridge.tar.xz -C {wine_lib_path} &>/dev/null")
-        print(f"xinput support added to Wine in container {wine_container}")
-        time.sleep(2)
-        change_setting()
 def check_config_wine():
     config_folder = "/sdcard/darkos"
     exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
@@ -430,20 +395,19 @@ def change_setting():
     photo()
     print("settings ⚙️")
     print("1) Update OS 👑")
-    print("2) Repair DARKOS files 🔧")
+    print("2) Repair DARKOS-lite files 🔧")
     print("3) Change box64 version 📥")
     print("4) Delete prefix 🪡")
     print("5) Change auto start setting 🖱️")
-    print("6) Debug mode 🐞")
-    print("7) Fix prefix for non wow64 wine ♻️")
+    print("6) Debug mode 🐞") 
+    print("7) winetricks ⛑️")
     print("8) Boost cpu 🔥 (needed root in some devices)")
-    print("9) add xinput support to wine 👾 (experimental) ")
-    print("10) winetricks ⛑️")
+
     
     print("else) Back 🔙")
     print("")
     choice = input()
-    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9" and choice != "10" and choice != "dev" and choice != "11":
+    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8":
         print("...........")
         main_menu()
     elif choice == "2":
@@ -469,11 +433,7 @@ def change_setting():
                wine_manager()
       elif stop == "n":
           wine_manager()
-    elif choice == "dev":
-        os.system("clear")
-        print("share log file on our Telegram group ")
-        print("dev mode")
-        os.system("BOX86_LOG=1 BOX86_SHOWSEGV=1 BOX86_DYNAREC_LOG=1 BOX86_DYNAREC_MISSING=1 BOX86_DLSYM_ERROR=1 BOX64_LOG=1 BOX64_SHOWSEGV=1 BOX64_DYNAREC_LOG=1 BOX64_DYNAREC_MISSING=1 WINEDEBUG=warn+all BOX64_DLSYM_ERROR=1 WINEDEBUG=+err taskset -c 4-7 box64 wine64 explorer /desktop=shell,800x600 $PREFIX/glibc/opt/apps/pc.ex >/sdcard/darkos.log")
+
     elif choice == "1":
         print("")
         print("Shutdown OS....")
@@ -512,13 +472,7 @@ def change_setting():
     elif choice == "5":
         auto_start()
     elif choice == "7":
-        recreate_32bit()
-    elif choice == "10":
         winetricks()
-    elif choice == "9":
-        os.system("clear")
-        photo()
-        xinput_support()
     elif choice == "8":
         os.system("clear")
         photo()
@@ -548,16 +502,12 @@ def box_version():
     print("")
     choice = input()
     file_path64 = "/data/data/com.termux/files/usr/glibc/bin/box64"
-    file_path86 = "/data/data/com.termux/files/usr/glibc/bin/box86"
     if choice not in ["1", "2"]:
         change_setting()
     elif choice == "1":
         if os.path.exists(file_path64):
             os.remove(file_path64)
-        if os.path.exists(file_path86):
-            os.remove(file_path86)
         os.system("tar -xJf $PREFIX/glibc/opt/box/safe-box.tar.xz -C $PREFIX/glibc/bin/")
-        os.system("chmod +x $PREFIX/glibc/bin/box86")
         os.system("chmod +x $PREFIX/glibc/bin/box64") 
         change_setting()
     elif choice == "2":
