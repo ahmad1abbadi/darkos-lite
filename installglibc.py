@@ -13,8 +13,8 @@ def termux_pkg():
     print("glibc-repo + x11-repo installed")
     os.system("pkg install pulseaudio xkeyboard-config freetype fontconfig termux-x11-nightly termux-am which bash curl sed cabextract -y --no-install-recommends &>/dev/null")
     print("pulseaudio + termux-am +........... installed successfully ")
-    os.system("pkg install wget libpng xorg-xrandr -y --no-install-recommends &>/dev/null")
-    print("wget........ installed successfully")
+    os.system("pkg install wget libpng xorg-xrandr mesa -y --no-install-recommends &>/dev/null")
+    print("wget+mesa........ installed successfully")
     print("")
 def install_glibc_AZ():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/glibc-darkos-lite.tar.xz")
