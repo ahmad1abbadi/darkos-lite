@@ -15,6 +15,9 @@ def termux_pkg():
     print("pulseaudio + termux-am +........... installed successfully ")
     os.system("pkg install wget libpng xorg-xrandr mesa -y --no-install-recommends &>/dev/null")
     print("wget+mesa........ installed successfully")
+    os.system("apt install tur-repo")
+    os.system("apt install virglrenderer-android virglrenderer-mesa-zink -y")
+    print("vrigl server...... installed successfully")
     print("")
 def install_glibc_AZ():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/glibc-darkos-lite.tar.xz")
