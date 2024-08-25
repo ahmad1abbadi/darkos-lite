@@ -28,7 +28,7 @@ def update():
     os.remove("update.tar.xz")
 def mangohud():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/mangohud.tar.xz")
-    os.system("tar -xvvf mangohud.tar.xz --strip-components=6 -C $PREFIX/glibc &>/dev/null")
+    os.system("tar -xJvf mangohud.tar.xz -C $PREFIX/glibc &>/dev/null")
     os.remove("mangohud.tar.xz")
 def install_AZ():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/AZ-lite.tar.xz")
