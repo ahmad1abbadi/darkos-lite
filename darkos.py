@@ -454,8 +454,6 @@ def change_setting():
             print("no update available ")
             time.sleep(3)
             change_setting()
-    elif choice == "3":
-        box_version()
     elif choice == "6":
         os.system("python3 $PREFIX/bin/debug-darkos.py")
     elif choice == "4":
