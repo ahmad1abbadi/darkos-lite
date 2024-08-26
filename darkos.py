@@ -86,6 +86,46 @@ def wine_container():
             os.system("box64 wineserver -k &>/dev/null")
             start_container()
     start_container()
+def internet_connected():
+    try:
+        socket.create_connection(("8.8.8.8", 53), timeout=1)
+        return True
+    except OSError:
+        pass
+    return False
+def uninstall_wine_lite():
+    if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin"):
+        os.system("rm -r /data/data/com.termux/files/usr/glibc/opt/wine/1/wine")
+        if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/.wine"):
+            shutil.rmtree('/data/data/com.termux/files/usr/glibc/opt/wine/1/.wine')
+    if os.path.exists("/sdcard/darkos"):
+        os.system("rm -r /sdcard/darkos")
+def install_files():
+    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/AZ.tar.xz")
+    extract_archive('AZ.tar.xz','/data/data/com.termux/files/usr/glibc/')
+    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/wine-default.tar.xz")
+    extract_archive('wine-default.tar.xz','/data/data/com.termux/files/usr/glibc/opt/wine/1/')
+    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/darkos.tar.xz")
+    extract_archive('darkos.tar.xz','/sdcard/')
+    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/update.tar.xz")
+    extract_archive('update.tar.xz','/data/data/com.termux/files/home/')
+    os.system("rm $PREFIX/bin/darkos.py")
+    os.system("rm $PREFIX/bin/update-darkos.py")
+    os.system("rm $PREFIX/bin/run-darkos.py")
+    os.system("rm $PREFIX/bin/debug-darkos.py")
+    os.system("rm $PREFIX/bin/setting-darkos.py")
+    os.system("rm $PREFIX/bin/darkos")
+    os.system("wget -O run-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/run-darkos.py")
+    os.system("wget -O darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/darkos.py")
+    os.system("wget -O darkos https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/darkos")
+    os.system("wget -O debug-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/debug-darkos.py")
+    os.system("wget -O setting-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/setting-darkos.py")
+    os.system("wget -O update-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/update-darkos.py")
+    os.system("chmod +x darkos")
+    os.system("mv update-darkos.py darkos.py run-darkos.py debug-darkos.py setting-darkos.py darkos $PREFIX/bin/")
+    remove()
+    print("")
+    print(f"{G} DARKOS-lite files repaired successfully {W}")
 def install_wine9():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/AZ-lite.tar.xz")
     os.system("tar -xJf AZ-lite.tar.xz -C $PREFIX/glibc")
@@ -230,7 +270,7 @@ def winetricks():
         print("loading...... winetrick")
         print("winetricks working just wait its take 1 minute to launch menu if you want to close it and back to main menu press control+C")
         os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
-        os.system("LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/bin/bash86 $PREFIX/glibc/bin/winetricks &>/dev/null")
+        os.system("LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/glibc/bin/winetricks &>/dev/null")
         main_menu()
     elif choise == "2":
         exec(open(conf_path).read())
@@ -242,7 +282,7 @@ def winetricks():
         print("")
         print("input verbs:")
         winetrick_verbs = input()
-        os.system(f"LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/bin/bash86 $PREFIX/glibc/bin/winetricks {winetrick_verbs} ")
+        os.system(f"LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64-bash $PREFIX/glibc/bin/winetricks {winetrick_verbs} ")
         print("")
         print("winetrick packages installed successfully...👍 ")
         print("backing to main menu..... 🔁")
@@ -407,28 +447,28 @@ def change_setting():
         print("...........")
         main_menu()
     elif choice == "2":
-      print(" Do you really want to repair Wine files ? This will delete all your files inside the drive C in container 1")
+      print(" Do you really want to repair emu files ? This will delete all your files inside the drive C in container 1")
       print(" yes = y")
       print(" no = n")
       stop = input()
       if stop != "y" and choice != "n":
           print("wrong choice backing to main menu")
           time.sleep(1)
-          wine_manager()
+          change_setting()
       elif stop == "y":
           if internet_connected():
-               uninstall_wine9()
+               uninstall_wine_lite()
                time.sleep(1)
-               install_wine9()
+               install_files()
                print("done....")
                time.sleep(1)
-               wine_manager()
+               change_setting()
           else:
                print("No internet connection available. Aborting operation.")
-               time.sleep(1)
-               wine_manager()
+               time.sleep(2)
+               change_setting()
       elif stop == "n":
-          wine_manager()
+          change_setting()
 
     elif choice == "1":
         print("")
