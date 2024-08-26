@@ -186,7 +186,7 @@ def winetricks():
         print("")
         print("input verbs:")
         winetrick_verbs = input()
-        os.system(f"LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/glibc/bin/winetricks {winetrick_verbs} ")
+        os.system(f"LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/bin/winetricks {winetrick_verbs} ")
         print("")
         print("winetrick packages installed successfully...👍 ")
         print("backing to main menu..... 🔁")
