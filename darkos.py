@@ -8,7 +8,7 @@ import sys, urllib.request, urllib.error
 import tarfile
 import socket
 import fnmatch
-current_version = "0.11"
+current_version = "0.1"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def start_darkos():
     os.system("clear")
@@ -101,40 +101,14 @@ def uninstall_wine_lite():
     if os.path.exists("/sdcard/darkos"):
         os.system("rm -r /sdcard/darkos")
 def install_files():
-    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/AZ.tar.xz")
-    extract_archive('AZ.tar.xz','/data/data/com.termux/files/usr/glibc/')
-    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/wine-default.tar.xz")
-    extract_archive('wine-default.tar.xz','/data/data/com.termux/files/usr/glibc/opt/wine/1/')
-    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/darkos.tar.xz")
-    extract_archive('darkos.tar.xz','/sdcard/')
-    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos/releases/download/beta/update.tar.xz")
-    extract_archive('update.tar.xz','/data/data/com.termux/files/home/')
-    os.system("rm $PREFIX/bin/darkos.py")
-    os.system("rm $PREFIX/bin/update-darkos.py")
-    os.system("rm $PREFIX/bin/run-darkos.py")
-    os.system("rm $PREFIX/bin/debug-darkos.py")
-    os.system("rm $PREFIX/bin/setting-darkos.py")
-    os.system("rm $PREFIX/bin/darkos")
-    os.system("wget -O run-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/run-darkos.py")
-    os.system("wget -O darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/darkos.py")
-    os.system("wget -O darkos https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/darkos")
-    os.system("wget -O debug-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/debug-darkos.py")
-    os.system("wget -O setting-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/setting-darkos.py")
-    os.system("wget -O update-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/update-darkos.py")
-    os.system("chmod +x darkos")
-    os.system("mv update-darkos.py darkos.py run-darkos.py debug-darkos.py setting-darkos.py darkos $PREFIX/bin/")
-    remove()
-    print("")
-    print(f"{G} DARKOS-lite files repaired successfully {W}")
-def install_wine9():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/AZ-lite.tar.xz")
-    os.system("tar -xJf AZ-lite.tar.xz -C $PREFIX/glibc")
+    extract_archive('AZ.tar.xz','/data/data/com.termux/files/usr/glibc/')
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/wine-default.tar.xz")
-    os.system("tar -xJf wine-default.tar.xz -C $PREFIX/glibc/opt/wine/1")
+    extract_archive('wine-default.tar.xz','/data/data/com.termux/files/usr/glibc/opt/wine/1/')
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/darkos.tar.xz")
-    os.system("tar -xJf darkos.tar.xz -C /sdcard/")
+    extract_archive('darkos.tar.xz','/sdcard/')
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/update.tar.xz")
-    os.system("tar -xJf update.tar.xz")
+    extract_archive('update.tar.xz','/data/data/com.termux/files/home/')
     os.system("rm $PREFIX/bin/darkos.py")
     os.system("rm $PREFIX/bin/update-darkos.py")
     os.system("rm $PREFIX/bin/run-darkos.py")
@@ -149,72 +123,7 @@ def install_wine9():
     os.system("mv update-darkos.py darkos.py run-darkos.py debug-darkos.py darkos $PREFIX/bin/")
     remove()
     print("")
-    print(" DARKOS files repaired successfully")    
-def recreate_32bit():
-    os.system("clear")
-    photo()
-    print("select wine :")
-    
-    wine_paths = {
-        "1": "/data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin",
-        "2": "/data/data/com.termux/files/usr/glibc/opt/wine/2/wine/bin",
-        "3": "/data/data/com.termux/files/usr/glibc/opt/wine/3/wine/bin"
-    }
-    
-    for key, path in wine_paths.items():
-        if os.path.exists(path):
-            if key == "1":
-                print("1) wine 1")
-            if key == "2":
-                print("2) wine 2")
-            if key == "3":
-                print("3) wine 3")
-    
-    print("Else) Back to the settings menu ")
-    print("")
-    
-    prefix_path = input("Enter your selection: ")
-    
-    if prefix_path not in wine_paths.keys():
-        change_setting()
-    else:
-        conf_path = f"/data/data/com.termux/files/usr/glibc/opt/wine/1/os.conf"
-        wine_prefix = f"/data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/.wine"
-        os.system("chmod +x $PREFIX/glibc/bin/box86")
-        os.system("chmod +x $PREFIX/glibc/bin/box64")
-        os.system(f"chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine")
-        os.system(f"chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine64")
-        os.system(f"chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wineserver")
-        os.system("rm -rf $PREFIX/glibc/bin/wine $PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/wineserver")
-        os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine $PREFIX/glibc/bin/wine")
-        os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wine64 $PREFIX/glibc/bin/wine64")
-        os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wineserver $PREFIX/glibc/bin/wineserver")
-        os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin/wineboot $PREFIX/glibc/bin/wineboot")
-        os.system(f"ln -sf /data/data/com.termux/files/us/glibc/opt/wine/1/wine/bin/winecfg $PREFIX/glibc/bin/winecfg")
-        os.environ.pop('LD_PRELOAD', None)
-        ### AZ DARK 
-        exec(open(conf_path).read())
-        def prefix_gstreamer():
-            os.environ['WINEPREFIX'] = os.path.expandvars("$PREFIX/glibc/opt/wine/3/.wine")
-            print("Fixing wine prefix ....")
-            os.system(f'WINEDLLOVERRIDES="mscoree=disabled" box64 wine64 wineboot &>/dev/null')
-            os.system(f'cp -r $PREFIX/glibc/opt/Startxmenu/* "{wine_prefix}/drive_c/ProgramData/Microsoft/Windows/Start Menu"')
-            os.system(f'rm "{wine_prefix}/dosdevices/z:"')
-            os.system(f'ln -s /sdcard/Download "{wine_prefix}/dosdevices/o:" &>/dev/null')
-            os.system(f'ln -s /sdcard/darkos "{wine_prefix}/dosdevices/e:" &>/dev/null')
-            os.system(f'ln -s /data/data/com.termux/files "{wine_prefix}/dosdevices/z:"')
-            print("please wait ..")
-            os.system(f'box64 wine "$PREFIX/glibc/opt/apps/Install OS stuff.bat" &>/dev/null')
-            print("done...please restart OS")
-            time.sleep(1)
-            os.system("box64 wineserver -k &>/dev/null")
-            main_menu()
-        if os.path.exists(wine_prefix):
-            shutil.rmtree(wine_prefix)
-            time.sleep(1)
-            prefix_gstreamer()
-        if not os.path.exists(wine_prefix):
-            prefix_gstreamer()
+    print(f"{G} DARKOS-lite files repaired successfully {W}")
 def photo():
     os.system("python3 $PREFIX/bin/photo.py")
 def check_network_connection():
@@ -231,7 +140,7 @@ def main():
         response = urllib.request.urlopen(url)
         latest_version = response.read().decode('utf-8').strip()
         if latest_version < current_version:
-            os.system("curl -o install https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/installO.sh && chmod +x install && ./install")
+            os.system("curl -o install https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/installO.sh && chmod +x install && ./install")
         if latest_version > current_version:
             print("update available....please update DARKOS")
     except urllib.error.HTTPError as e:
@@ -239,11 +148,6 @@ def main():
             print("🙅‍♂️🛜", e)
         else:
             print("something went wrong please send this error to developer")
-
-def mangohud_vulkan():
-    os.system("apt reinstall vulkan-icd-loader-glibc")
-    print("working...... please wait ")
-    os.system("grun -s ldconfig")
 def winetricks():
     os.system("clear")
     photo()
@@ -282,7 +186,7 @@ def winetricks():
         print("")
         print("input verbs:")
         winetrick_verbs = input()
-        os.system(f"LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64-bash $PREFIX/glibc/bin/winetricks {winetrick_verbs} ")
+        os.system(f"LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/glibc/bin/winetricks {winetrick_verbs} ")
         print("")
         print("winetrick packages installed successfully...👍 ")
         print("backing to main menu..... 🔁")
