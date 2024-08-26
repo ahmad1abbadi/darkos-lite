@@ -174,7 +174,7 @@ def winetricks():
         print("loading...... winetrick")
         print("winetricks working just wait its take 1 minute to launch menu if you want to close it and back to main menu press control+C")
         os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
-        os.system("LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/glibc/bin/winetricks &>/dev/null")
+        os.system("LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/bin/winetricks &>/dev/null")
         main_menu()
     elif choise == "2":
         exec(open(conf_path).read())
