@@ -43,7 +43,6 @@ def recreate_prefix():
     else:
       conf_path = f"/data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/os.conf"
       wine_prefix = f"/data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/.wine"
-      os.system("chmod +x $PREFIX/glibc/bin/box86")
       os.system("chmod +x $PREFIX/glibc/bin/box64")
       os.system(f"chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/wine")
       os.system(f"chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/wine64")
@@ -79,7 +78,7 @@ def recreate_prefix():
         os.system("box64 wineserver -k &>/dev/null")
         print("os will start on debug mode see log file if there any issues ")
         time.sleep(2)
-        os.system("BOX86_LOG=2 BOX86_SHOWSEGV=1 BOX86_DYNAREC_LOG=1 BOX86_DYNAREC_MISSING=1 BOX86_DLSYM_ERROR=1 BOX64_LOG=3 BOX64_SHOWSEGV=1 BOX64_DYNAREC_LOG=1 BOX64_DYNAREC_MISSING=1 BOX64_DLSYM_ERROR=1 taskset -c 4-7 box64 wine explorer /desktop=shell,800x600 $PREFIX/glibc/opt/apps/pc.ex >/sdcard/darkos.log 2>&1 &")
+        os.system("BOX64_LOG=3 BOX64_SHOWSEGV=1 BOX64_DYNAREC_LOG=1 BOX64_DYNAREC_MISSING=1 BOX64_DLSYM_ERROR=1 taskset -c 4-7 box64 wine explorer /desktop=shell,800x600 $PREFIX/glibc/opt/apps/pc.ex >/sdcard/darkos.log 2>&1 &")
         os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
         os.system("clear")
         os.system("python3 $PREFIX/bin/photo.py")
