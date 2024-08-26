@@ -8,7 +8,7 @@ import sys, urllib.request, urllib.error
 import tarfile
 import socket
 import fnmatch
-current_version = "0.1"
+current_version = "0.11"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def start_darkos():
     os.system("clear")
