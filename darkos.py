@@ -94,7 +94,14 @@ def internet_connected():
     except OSError:
         pass
     return False
-
+def remove():
+    folder_path = '/data/data/com.termux/files/home'
+    for filename in os.listdir(folder_path):
+        if fnmatch.fnmatch(filename, '*.tar.xz*'):
+            file_path = os.path.join(folder_path, filename)
+            os.remove(file_path)
+            print(f'{filename} has been deleted.')
+            
 def uninstall_wine_lite():
     if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin"):
         os.system("rm -r /data/data/com.termux/files/usr/glibc/opt/wine/1/wine")
