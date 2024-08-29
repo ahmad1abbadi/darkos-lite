@@ -137,7 +137,7 @@ def extract_archive(file_path, extract_to):
     try:
         os.remove(file_path)
     except Exception as e:
-        print(Error deleting archive file")
+        print("Error deleting archive file")
 
 def uninstall_wine_lite():
     if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin"):
