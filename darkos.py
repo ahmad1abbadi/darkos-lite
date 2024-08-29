@@ -102,7 +102,7 @@ def uninstall_wine_lite():
         os.system("rm -r /sdcard/darkos")
 def install_files():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/AZ-lite.tar.xz")
-    extract_archive('AZ.tar.xz','/data/data/com.termux/files/usr/glibc/')
+    extract_archive('AZ-lite.tar.xz','/data/data/com.termux/files/usr/glibc/')
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/wine-default.tar.xz")
     extract_archive('wine-default.tar.xz','/data/data/com.termux/files/usr/glibc/opt/wine/1/')
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/darkos.tar.xz")
