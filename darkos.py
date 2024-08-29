@@ -8,13 +8,6 @@ import sys, urllib.request, urllib.error
 import tarfile
 import socket
 import fnmatch
-R = "\033[1;31m"
-G = "\033[1;32m"
-Y = "\033[1;33m"
-B = "\033[1;34m"
-C = "\033[1;36m"
-W = "\033[1;37m"
-BOLD = "\033[1m"
 
 current_version = "0.1"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
@@ -101,43 +94,6 @@ def internet_connected():
     except OSError:
         pass
     return False
-def extract_archive(file_path, extract_to):
-    if not os.path.exists(file_path):
-        print(f"File does not exist: {file_path}")
-        return
-
-    if file_path.endswith('.zip'):
-        with zipfile.ZipFile(file_path, 'r') as zip_ref:
-            file_size = sum((file.file_size for file in zip_ref.infolist()))
-            with tqdm(total=file_size, unit='B', unit_scale=True, desc=f'{G}Extracting{C}', bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{rate_fmt}{postfix}]') as pbar:
-                for file in zip_ref.infolist():
-                    zip_ref.extract(file, extract_to)
-                    pbar.update(file.file_size)
-
-    elif file_path.endswith('.tar.gz') or file_path.endswith('.tgz') or file_path.endswith('.tar'):
-        with tarfile.open(file_path, 'r') as tar_ref:
-            file_size = sum((file.size for file in tar_ref.getmembers()))
-            with tqdm(total=file_size, unit='B', unit_scale=True, desc=f'{G}Extracting{C}', bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{rate_fmt}{postfix}]') as pbar:
-                for file in tar_ref.getmembers():
-                    tar_ref.extract(file, extract_to)
-                    pbar.update(file.size)
-
-    elif file_path.endswith('.tar.xz') or file_path.endswith('.txz'):
-        with tarfile.open(file_path, 'r:xz') as tar_ref:
-            file_size = sum((file.size for file in tar_ref.getmembers()))
-            with tqdm(total=file_size, unit='B', unit_scale=True, desc=f'{G}Extracting{C}', bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt} [{rate_fmt}{postfix}]') as pbar:
-                for file in tar_ref.getmembers():
-                    tar_ref.extract(file, extract_to)
-                    pbar.update(file.size)
-
-    else:
-        print(f"Unsupported file format")
-        return
-
-    try:
-        os.remove(file_path)
-    except Exception as e:
-        print("Error deleting archive file")
 
 def uninstall_wine_lite():
     if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin"):
@@ -148,13 +104,13 @@ def uninstall_wine_lite():
         os.system("rm -r /sdcard/darkos")
 def install_files():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/AZ-lite.tar.xz")
-    extract_archive('AZ-lite.tar.xz','/data/data/com.termux/files/usr/glibc/')
+    os.system("tar -xJf AZ-lite.tar.xz -C $PREFIX/glibc")
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/wine-default.tar.xz")
-    extract_archive('wine-default.tar.xz','/data/data/com.termux/files/usr/glibc/opt/wine/1/')
+    os.system("tar -xJf wine-default.tar.xz -C $PREFIX/glibc/opt/wine/1")
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/darkos.tar.xz")
-    extract_archive('darkos.tar.xz','/sdcard/')
+    os.system("tar -xJf darkos.tar.xz -C /sdcard/")
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/update.tar.xz")
-    extract_archive('update.tar.xz','/data/data/com.termux/files/home/')
+    os.system("tar -xJf update.tar.xz")
     os.system("rm $PREFIX/bin/darkos.py")
     os.system("rm $PREFIX/bin/update-darkos.py")
     os.system("rm $PREFIX/bin/run-darkos.py")
@@ -169,7 +125,7 @@ def install_files():
     os.system("mv update-darkos.py darkos.py run-darkos.py debug-darkos.py darkos $PREFIX/bin/")
     remove()
     print("")
-    print(f"{G} DARKOS-lite files repaired successfully {W}")
+    print("DARKOS-lite files repaired successfully")
 def photo():
     os.system("python3 $PREFIX/bin/photo.py")
 def check_network_connection():
