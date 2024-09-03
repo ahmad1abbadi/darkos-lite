@@ -8,6 +8,7 @@ import sys, urllib.request, urllib.error
 import tarfile
 import socket
 import fnmatch
+
 current_version = "0.1"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def start_darkos():
@@ -93,6 +94,14 @@ def internet_connected():
     except OSError:
         pass
     return False
+def remove():
+    folder_path = '/data/data/com.termux/files/home'
+    for filename in os.listdir(folder_path):
+        if fnmatch.fnmatch(filename, '*.tar.xz*'):
+            file_path = os.path.join(folder_path, filename)
+            os.remove(file_path)
+            print(f'{filename} has been deleted.')
+            
 def uninstall_wine_lite():
     if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/wine/bin"):
         os.system("rm -r /data/data/com.termux/files/usr/glibc/opt/wine/1/wine")
@@ -102,13 +111,13 @@ def uninstall_wine_lite():
         os.system("rm -r /sdcard/darkos")
 def install_files():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/AZ-lite.tar.xz")
-    extract_archive('AZ.tar.xz','/data/data/com.termux/files/usr/glibc/')
+    os.system("tar -xJf AZ-lite.tar.xz -C $PREFIX/glibc")
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/wine-default.tar.xz")
-    extract_archive('wine-default.tar.xz','/data/data/com.termux/files/usr/glibc/opt/wine/1/')
+    os.system("tar -xJf wine-default.tar.xz -C $PREFIX/glibc/opt/wine/1")
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/darkos.tar.xz")
-    extract_archive('darkos.tar.xz','/sdcard/')
+    os.system("tar -xJf darkos.tar.xz -C /sdcard/")
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/update.tar.xz")
-    extract_archive('update.tar.xz','/data/data/com.termux/files/home/')
+    os.system("tar -xJf update.tar.xz")
     os.system("rm $PREFIX/bin/darkos.py")
     os.system("rm $PREFIX/bin/update-darkos.py")
     os.system("rm $PREFIX/bin/run-darkos.py")
@@ -123,7 +132,7 @@ def install_files():
     os.system("mv update-darkos.py darkos.py run-darkos.py debug-darkos.py darkos $PREFIX/bin/")
     remove()
     print("")
-    print(f"{G} DARKOS-lite files repaired successfully {W}")
+    print("DARKOS-lite files repaired successfully")
 def photo():
     os.system("python3 $PREFIX/bin/photo.py")
 def check_network_connection():
