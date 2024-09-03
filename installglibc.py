@@ -111,6 +111,12 @@ def install_wine9():
     os.system("tar -xJf wine-default.tar.xz -C $PREFIX/glibc/opt/wine/1")
     os.remove("wine-default.tar.xz")
     os.system("apt reinstall vulkan-icd-loader-glibc -y &>/dev/null")
+def check_and_backup(file_paths):
+    home_dir = os.path.expanduser("~")
+    full_path = os.path.join(home_dir, file_paths)
+    if os.path.exists(full_path):
+        backup_path = f"{full_path}.bak"
+        os.rename(full_path, backup_path)
 def scripts():
     os.system("wget https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/update-darkos.py &>/dev/null")
     os.system("wget https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/debug-darkos.py &>/dev/null")
