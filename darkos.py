@@ -182,11 +182,54 @@ def winetricks():
         exec(open('/sdcard/darkos/darkos_custom.conf').read())
         os.system("clear")
         photo()
-        print("winetrick verbs ready to use on chosen container...")
+        print("winetrick verbs ready to use on chosen container. Select the desired one:")
         print("")
-        print("input verbs:")
-        winetrick_verbs = input()
-        os.system(f"LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/bin/winetricks {winetrick_verbs} ")
+        print("1) apps")
+        print("2) benchmarks")
+        print("3) dlls")
+        print("4) fonts")
+        print("5) settings")
+        print("Select verb:")
+        winetricks_verb = input()
+        while not 1 <= float(winetricks_verb) <= 5:
+            print("Invalid option. Retry:")
+            print("")
+            print("1) apps")
+            print("2) benchmarks")
+            print("3) dlls")
+            print("4) fonts")
+            print("5) settings")
+            print("Select verb:")
+            winetricks_verb = input()
+            pass
+        if winetricks_verb == "1":
+            winetricks_verb = "apps"
+        elif winetricks_verb == "2":
+            winetricks_verb = "benchmarks"
+        elif winetricks_verb == "3":
+            winetricks_verb = "dlls"
+        elif winetricks_verb == "4":
+            winetricks_verb = "fonts"
+        else:
+            winetricks_verb = "settings"
+        os.system(f"clear")
+        print("Enter package (enter 0 to go back, 1 to print all available packages):")
+        winetricks_package = input()
+        if winetricks_package == "1":
+            print("Available packages/options:")
+            print("")
+            os.system(f"BOX64_LOG=0 LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/bin/winetricks {winetricks_verb} list 2>/dev/null | grep -v 'Box64 with Dynarec'")
+            print("Select package (enter 0 to go back):")
+            winetricks_package = input()
+            if winetricks_package == "0":
+                print("backing to main menu")
+                time.sleep(2)
+                main_menu()
+        elif winetricks_package == "0":
+            print("backing to main menu")
+            time.sleep(2)
+            main_menu()
+        os.system(f"BOX64_LOG=0 LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/bin/winetricks {winetricks_verb} {winetricks_package} 2>/dev/null | grep -v 'Box64 with Dynarec'")
         print("")
         print("winetrick packages installed successfully...👍 ")
         print("backing to main menu..... 🔁")
@@ -331,6 +374,51 @@ def auto_start():
             print("Auto start os deactivated successfully")
             time.sleep(2)
             change_setting()
+def autoclean_ram():
+    os.system("clear")
+    photo()
+    print(" select what you refer:")
+    print("")
+    print(" 1) turn-on autoclean ram 👍")
+    print("")
+    print(" 2) turn-off autoclean ram 👎")
+    print("")
+    print( "else) back to settings menu")
+    choice = input()
+    if choice != "1" and choice != "2":
+        change_setting()
+    elif choice == "1":
+        command = "tail /dev/zero &>/dev/null"
+        bashrc_path = os.path.expanduser('~/.bashrc')
+        command_exists = False
+        if os.path.exists(bashrc_path):
+            with open(bashrc_path, 'r') as f:
+                for line in f:
+                    if command in line:
+                        command_exists = True
+                        print(" autoclean ram already activated... ")
+                        time.sleep(2)
+                        change_setting()
+        if not command_exists:
+            with open(bashrc_path, 'a') as f:
+                f.write(command + '\n')
+            print(" autoclean ram activated successfully")
+            time.sleep(2)
+            change_setting()
+    elif choice == "2":
+        command = "tail /dev/zero >/dev/null"
+        bashrc_path = os.path.expanduser('~/.bashrc')
+        command_exists = False
+        if os.path.exists(bashrc_path):
+            with open(bashrc_path, 'r') as f:
+                lines = f.readlines()
+            with open(bashrc_path, 'w') as f:
+                for line in lines:
+                    if command not in line:
+                        f.write(line)
+            print("Autoclean ram deactivated successfully")
+            time.sleep(2)
+            change_setting()
 def change_setting():
     os.system("clear")
     photo()
@@ -342,12 +430,13 @@ def change_setting():
     print("5) Change auto start setting 🖱️")
     print("6) Debug mode 🐞") 
     print("7) Boost cpu 🔥 (needed root in some devices)")
-
+    print("8) Autoclean RAM 🔥 (clean RAM on every DarkOS launch. EXPERIMENTAL)")
+    print("9) Move Games to Termux Internal Filesystem")
     
     print("else) Back 🔙")
     print("")
     choice = input()
-    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8":
+    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9":
         print("...........")
         main_menu()
     elif choice == "2":
@@ -404,6 +493,10 @@ def change_setting():
         recreate_prefix_wineAZ()
     elif choice == "5":
         auto_start()
+    elif choice == "8":
+        autoclean_ram()
+    elif choice == "9":
+        move_games()
     elif choice == "3":
         winetricks()
     elif choice == "7":
@@ -424,6 +517,24 @@ def change_setting():
         print("check the new session for more info 👀 ")
         time.sleep(5)
         change_setting()
+def move_games():
+    print("")
+    print("This will move your games to Drive D, erasing them from their original path.")
+    print("This way, some games will increase performance.")
+    print("But remember to restore your games if you'll uninstall DarkOS Lite")
+    print("Otherwise, you'll lose your games!")
+    print("Select your desired option: ")
+    print("1) Move games to Drive D")
+    print("2) Restore games to the original path")
+    print("else) Back to main menu")
+    choice = input()
+    if choice != "1" and choice != "2":
+        change_setting()
+    elif choice == "1":
+        os.system(f"file-selector")
+    elif choice == "2":
+        os.system("mv $PREFIX/glibc/opt/G_drive \"$GAMES_PATH\"")
+        os.system("mkdir $PREFIX/glibc/opt/G_drive")
 def reload():
     file_path = os.path.expanduser("~/.termux/termux.properties")
     with open(file_path, "r") as file:

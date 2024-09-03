@@ -1,0 +1,47 @@
+#!/bin/bash
+
+while true; do
+    PS3="Select a directory (or 'Go Back' to return, 'Select this directory' to set games path): "
+
+    # Add a "Go Back" option if not in the root directory
+    if [ "$(pwd)" != "/data/data/com.termux/files/home" ]; then
+        options=("Go Back" "/sdcard" $(ls -d */ 2>/dev/null | sed 's/ /\\/g') "Select this directory")
+    elif [[ "$(pwd)" == "/sdcard"* ]]; then
+        options=("Go Back" $(ls -d */ 2>/dev/null | sed 's/ /\\/g') "Select this directory")
+    else
+        options=($(ls -d */ 2>/dev/null | sed 's/ /\\/g') "Select this directory")
+    fi
+    
+    # Show directories to select
+    select dir in "${options[@]}"; do
+        if [ "$dir" == "Select this directory" ]; then
+            if [ "$(pwd)" != "/data/data/com.termux/files/home" ]; then
+                echo "export GAMES_PATH=$(pwd)" >> ~/.bashrc
+                mv "$(pwd)" $PREFIX/glibc/opt/G_drive/
+                exit 0
+            else
+                echo "Can't move this directory because is a vital system folder"
+            fi
+        elif [ "$dir" == "Go Back" ]; then
+            if [ "$(pwd)" != "/data/data/com.termux/files/home" ]; then
+                if [ "$(pwd)" == "/sdcard" ]; then
+                    cd
+                else
+                    cd ..
+                fi
+                echo "Navigating back to: $(pwd)"
+                break
+            else
+                echo "Can't go back: Permission denied!"
+                break
+            fi
+        elif [ -n "$dir" ]; then
+            dir=$(echo "$dir" | sed 's/\\/ /g')
+            cd "$dir"
+            echo "Navigating to: $(pwd)"
+            break
+        else
+            echo "Invalid selection."
+        fi
+    done
+done
