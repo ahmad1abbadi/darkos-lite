@@ -528,22 +528,25 @@ def change_setting():
         change_setting()
 def move_games():
     print("")
-    print("This will move your games to Drive D, erasing them from their original path.")
+    print("This will move your games to Drive G, erasing them from their original path.")
     print("This way, some games will increase performance.")
     print("But remember to restore your games if you'll uninstall DarkOS Lite")
     print("Otherwise, you'll lose your games!")
     print("Select your desired option: ")
-    print("1) Move games to Drive D")
+    print("1) Move games to Drive G")
     print("2) Restore games to the original path")
     print("else) Back to main menu")
+    print("")
     choice = input()
     if choice != "1" and choice != "2":
         change_setting()
     elif choice == "1":
         os.system(f"file-selector")
+        change_setting()
     elif choice == "2":
-        os.system("mv $PREFIX/glibc/opt/G_drive \"$GAMES_PATH\"")
+        os.system("mv $PREFIX/glibc/opt/G_drive \"$GAMES_PATH\" -v")
         os.system("mkdir $PREFIX/glibc/opt/G_drive")
+        change_setting()
 def reload():
     file_path = os.path.expanduser("~/.termux/termux.properties")
     with open(file_path, "r") as file:

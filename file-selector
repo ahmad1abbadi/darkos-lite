@@ -17,7 +17,7 @@ while true; do
         if [ "$dir" == "Select this directory" ]; then
             if [ "$(pwd)" != "/data/data/com.termux/files/home" ]; then
                 echo "export GAMES_PATH=$(pwd)" >> ~/.bashrc
-                mv "$(pwd)" $PREFIX/glibc/opt/G_drive/
+                mv "$(pwd)" $PREFIX/glibc/opt/G_drive/ -v
                 exit 0
             else
                 echo "Can't move this directory because is a vital system folder"
@@ -30,16 +30,13 @@ while true; do
                     cd ..
                 fi
                 echo "Navigating back to: $(pwd)"
-                break
             else
                 echo "Can't go back: Permission denied!"
-                break
             fi
         elif [ -n "$dir" ]; then
             dir=$(echo "$dir" | sed 's/\\/ /g')
             cd "$dir"
             echo "Navigating to: $(pwd)"
-            break
         else
             echo "Invalid selection."
         fi
