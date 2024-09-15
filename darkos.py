@@ -9,7 +9,7 @@ import tarfile
 import socket
 import fnmatch
 
-current_version = "0.1"
+current_version = "0.2"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def start_darkos():
     os.system("clear")
@@ -441,11 +441,12 @@ def change_setting():
     print("7) Boost cpu 🔥 (needed root in some devices)")
     print("8) Autoclean RAM 🔥 (clean RAM on every DarkOS launch. EXPERIMENTAL)")
     print("9) Move Games to Termux Internal Filesystem")
+    print("10) Build Box64")
     
     print("else) Back 🔙")
     print("")
     choice = input()
-    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9":
+    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9" and choice != "10":
         print("...........")
         main_menu()
     elif choice == "2":
@@ -508,6 +509,8 @@ def change_setting():
         move_games()
     elif choice == "3":
         winetricks()
+    elif choice == "10":
+        build_box64()
     elif choice == "7":
         os.system("clear")
         photo()
@@ -526,6 +529,29 @@ def change_setting():
         print("check the new session for more info 👀 ")
         time.sleep(5)
         change_setting()
+def build_box64():
+    print("")
+    print("This will build an updated Box64 bin from ptitSeb github source")
+    print("adding some new features that still not in the main builds available on TDB")
+    print("THESE ARE NOT TESTED. So expect incompatibilities")
+    print("")
+    print("Select your desired option: ")
+    print("1) Build Box64")
+    print("2) Build Box64 with Box32 support (EXPERIMENTAL)")
+    print("else) Back to main menu")
+    print("")
+    choice = input()
+    if choice != "1" and choice != "2":
+        change_setting()
+    elif choice == "1":
+        box32 = "0"
+        change_setting()
+    elif choice == "2":
+        box32 = "1"
+        change_setting()
+    os.system("apt install cmake-glibc make-glibc python-glibc -y")
+    os.system("pkg install -y git")
+    os.system("unset LD_PRELOAD; export GLIBC_PREFIX=$PREFIX/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL=ON -DSD845=ON -DBOX32={{box32}}; make -j8; make install")
 def move_games():
     print("")
     print("This will move your games to Drive G, erasing them from their original path.")
@@ -544,8 +570,7 @@ def move_games():
         os.system(f"file-selector")
         change_setting()
     elif choice == "2":
-        os.system("mv $PREFIX/glibc/opt/G_drive \"$GAMES_PATH\" -v")
-        os.system("mkdir $PREFIX/glibc/opt/G_drive")
+        os.system("mv $PREFIX/glibc/opt/G_drive/* \"$GAMES_PATH\" -v")
         change_setting()
 def reload():
     file_path = os.path.expanduser("~/.termux/termux.properties")

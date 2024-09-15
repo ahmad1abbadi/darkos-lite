@@ -8,7 +8,7 @@ C = "\033[1;36m"
 W = "\033[1;37m"
 BOLD = "\033[1m"
 
-current_version = "0.1"
+current_version = "0.2"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def remove():
     folder_path = '/data/data/com.termux/files/home'

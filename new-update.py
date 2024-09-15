@@ -32,7 +32,7 @@ def update_files():
   os.system("tar -xJf files.tar.xz -C /data/data/com.termux/files/")
   os.remove("files.tar.xz")
     
-current_version = "0.1"
+current_version = "0.2"
 update_files()
 print(current_version)
 print(f"{Y}update complete")
