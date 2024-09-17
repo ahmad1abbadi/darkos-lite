@@ -545,13 +545,27 @@ def build_box64():
         change_setting()
     elif choice == "1":
         box32 = "0"
-        change_setting()
     elif choice == "2":
         box32 = "1"
+    print("")
+    print("Select wich version of Box64 will build: ")
+    print("1) Build Box64 for SD845")
+    print("2) Build Box64 for SD888")
+    print("3) Build Box64 for SD8G2")
+    print("else) Back to main menu")
+    print("")
+    sdchoice = input()
+    if sdchoice != "1" and sdchoice != "2" and sdchoice != "3":
         change_setting()
+    elif sdchoice == "1":
+        sdver = "SD845"
+    elif sdchoice == "2":
+        sdver = "SD888"
+    elif sdchoice == "3":
+        sdver = "SD8G2"
     os.system("apt install cmake-glibc make-glibc python-glibc -y")
     os.system("pkg install -y git")
-    os.system("unset LD_PRELOAD; export GLIBC_PREFIX=$PREFIX/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL=ON -DSD845=ON -DBOX32={{box32}}; make -j8; make install")
+    os.system("unset LD_PRELOAD; export GLIBC_PREFIX=$PREFIX/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL=OFF -D{{sdver}}=ON -DBOX32={{box32}}; make -j8; make install")
 def move_games():
     print("")
     print("This will move your games to Drive G, erasing them from their original path.")
