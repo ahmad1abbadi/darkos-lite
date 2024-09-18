@@ -563,9 +563,25 @@ def build_box64():
         sdver = "SD888"
     elif sdchoice == "3":
         sdver = "SD8G2"
+    print("")
+    print("Select your desired option: ")
+    print("1) Activate BAD_SIGNAL")
+    print("2) Deactivate BAD_SIGNAL")
+    print("else) Back to main menu")
+    print("")
+    bschoice = input()
+    if bschoice != "1" and bschoice != "2":
+        change_setting()
+    elif bschoice == "1":
+        badsignal = "ON"
+    elif bschoice == "2":
+        badsignal = "OFF"
+    print("")
     os.system("apt install cmake-glibc make-glibc python-glibc -y")
     os.system("pkg install -y git")
-    os.system("unset LD_PRELOAD; export GLIBC_PREFIX=$PREFIX/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL=OFF -D{{sdver}}=ON -DBOX32={{box32}}; make -j8; make install")
+    os.system("unset LD_PRELOAD; export GLIBC_PREFIX=$PREFIX/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL={{badsignal}} -D{{sdver}}=ON -DBOX32={{box32}}; make -j8; make install")
+    os.system("rm -rf ~/box64")
+    change_setting()
 def move_games():
     print("")
     print("This will move your games to Drive G, erasing them from their original path.")
@@ -584,7 +600,7 @@ def move_games():
         os.system(f"file-selector")
         change_setting()
     elif choice == "2":
-        os.system("mv $PREFIX/glibc/opt/G_drive/* \"$GAMES_PATH\" -v")
+        os.system("rsync -r --info=progress2 --remove-source-files $PREFIX/glibc/opt/G_drive/* \"$GAMES_PATH\"")
         change_setting()
 def reload():
     file_path = os.path.expanduser("~/.termux/termux.properties")

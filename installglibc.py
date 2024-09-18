@@ -11,7 +11,7 @@ def termux_pkg():
     print("This takes a few minutes it depends on your internet connection")
     os.system("pkg install glibc-repo x11-repo -y &>/dev/null")
     print("glibc-repo + x11-repo installed")
-    os.system("pkg install pulseaudio xkeyboard-config freetype fontconfig termux-x11-nightly termux-am which bash curl sed cabextract -y --no-install-recommends &>/dev/null")
+    os.system("pkg install rsync pulseaudio xkeyboard-config freetype fontconfig termux-x11-nightly termux-am which bash curl sed cabextract -y --no-install-recommends &>/dev/null")
     print("pulseaudio + termux-am +........... installed successfully ")
     os.system("pkg install wget libpng xorg-xrandr mesa -y --no-install-recommends &>/dev/null")
     print("wget+mesa........ installed successfully")
