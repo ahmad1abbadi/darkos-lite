@@ -151,9 +151,9 @@ For touch controls Input Bridge app is required.
 adb shell "/system/bin/device_config put activity_manager max_phantom_processes 2147483647"
 ```
   
-## Support DarkOS
-[buy me a coffee](https://www.buymeacoffee.com/AZabbadi)
-#
+## Support DarkOS-Lite
+[PAYPAL](https://paypal.me/GabiAle97?country.x=AR&locale.x=es_XC)
+
 
 ## DarkOS Developers 
 
