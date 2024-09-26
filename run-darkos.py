@@ -81,7 +81,7 @@ def create_wine_prefix():
 def start_wine():
     os.system("$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionMode:custom &>/dev/null &")
     os.system(f"$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionCustom:{res} &>/dev/null &")
-    os.system("box64 wine64 explorer /desktop=shell," + res + " $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &")
+    os.system(f'WINEDLLOVERRIDES="winegstreamer=disabled" box64 wine64 explorer /desktop=shell,{res} $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &')
     time.sleep(2)
     os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
     os.system("clear")
@@ -93,7 +93,9 @@ def start_wine():
     print("")
     print(f"{G}{BOLD} (1) for {C}SHUTDOWN{W}")
     print("")
-    print(f"{G}{BOLD} (2) for exit to the {C}terminal{W}")
+    print(f"{G}{BOLD} (2) for exit to the {C}TERMINAL{W}")
+    print("")
+    print(f"{G}{BOLD} (3) for enter {C}SAFE MODE{W}")
     print("")
     print(f"{G}{BOLD} Simply press any other key to {C}REBOOT{W}")
     print("")
@@ -172,7 +174,7 @@ def settings_wine():
 def input_action():
     while True:
         stop = input()
-        if stop != "1" and stop != "2":
+        if stop != "1" and stop != "2" and stop != "3":
             print("")
             print(f"{G}{BOLD} Rebooting......... {W}")
             os.system("box64 wineserver -k &>/dev/null")
@@ -187,6 +189,11 @@ def input_action():
             print(f"{G}{BOLD} exiting to the terminal goodbye {W}")
             time.sleep(2)
             os._exit(0)
+        elif stop == "3":
+            os.system("box64 wineserver -k")
+            print(f"{G}{BOLD} Entering Safe Mode {W}")
+            time.sleep(2)
+            os.system("python3 $PREFIX/bin/darkos.py $@")
 def restart_program():
     extract_and_delete_tar_files()                
     load_conf()
