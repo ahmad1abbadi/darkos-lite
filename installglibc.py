@@ -94,12 +94,13 @@ def create_prefix():
     print("Installing OS stuff...")
     os.system(f'wget https://github.com/ahmad1abbadi/extra/releases/download/update/mediafoundation-fix.zip -O $PREFIX/glibc/opt/apps/mf-fix.zip')
     os.system(f'unzip -o $PREFIX/glibc/opt/apps/mf-fix.zip -d $PREFIX/glibc/opt/apps/mf-fix/')
+    os.system(f'chmod -R 775 $PREFIX/glibc/opt/apps/mf-fix.zip -d $PREFIX/glibc/opt/apps/mf-fix')
     os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/Install OS stuff.bat" &>/dev/null')
     os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/mf-fix/install.bat" &>/dev/null')
     print("Searching and Recovering previous savegames...")
     if os.path.exists(f"/sdcard/darkos-savegames"):
         print("Previous savegames found! Recovering...")
-        os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/')
+        os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/ &>/dev/null')
         os.system(f'echo "1" > /sdcard/darkos/last_container_savegame')
     else:
         print("No previous savegames found. Skipping...")
