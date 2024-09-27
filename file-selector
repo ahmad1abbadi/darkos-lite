@@ -15,7 +15,7 @@ while true; do
     select dir in "${options[@]}"; do
         if [ "$dir" == "Select this directory" ]; then
             if [ "$(pwd)" != "/sdcard" ]; then
-                echo "export GAMES_PATH=$(pwd)" >> ~/.bashrc
+                sed -i '1i export GAMES_PATH=$(pwd)' ~/.bashrc
                 rsync -r --info=progress2 --remove-source-files "$(pwd)"/* $PREFIX/glibc/opt/G_drive/
                 exit 0
             else

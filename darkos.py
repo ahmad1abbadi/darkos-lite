@@ -399,7 +399,7 @@ def autoclean_ram():
     if choice != "1" and choice != "2":
         change_setting()
     elif choice == "1":
-        command = "tail /dev/zero &>/dev/null"
+        command = "tail /dev/zero &>/dev/null \n"
         bashrc_path = os.path.expanduser('~/.bashrc')
         command_exists = False
         if os.path.exists(bashrc_path):
@@ -411,13 +411,17 @@ def autoclean_ram():
                         time.sleep(2)
                         change_setting()
         if not command_exists:
-            with open(bashrc_path, 'a') as f:
-                f.write(command + '\n')
+            with open(bashrc_path, 'r') as f:
+                lines = f.readlines()
+            with open(bashrc_path, 'w') as f:
+                f.write(command)
+                for line in lines:
+                    f.write(line)
             print(" autoclean ram activated successfully")
             time.sleep(2)
             change_setting()
     elif choice == "2":
-        command = "tail /dev/zero >/dev/null"
+        command = "tail /dev/zero &>/dev/null"
         bashrc_path = os.path.expanduser('~/.bashrc')
         command_exists = False
         if os.path.exists(bashrc_path):
