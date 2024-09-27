@@ -44,6 +44,7 @@ def load_conf():
         "/data/data/com.termux/files/usr/glibc/opt/darkos/language.conf",
         "/sdcard/darkos/darkos_dynarec.conf",
         "/sdcard/darkos/darkos_custom.conf",
+        "/sdcard/darkos/VKD3D.conf",
         "/data/data/com.termux/files/usr/glibc/opt/scripts/hud-settings.conf"
     ]
     for conf_path in conf_paths:

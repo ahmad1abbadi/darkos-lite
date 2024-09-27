@@ -6,6 +6,7 @@ import threading
 exec(open('/data/data/com.termux/files/usr/glibc/opt/wine/os.conf').read())
 exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
 exec(open('/sdcard/darkos/darkos_custom.conf').read())
+exec(open('/sdcard/darkos/VKD3D.conf').read())
 os.environ["BOX64_TRACE_FILE"]="/sdcard/darkos/trace/trace-%pid.txt"
 os.system("BOX64_LOG=1 BOX64_SHOWSEGV=1 BOX64_DYNAREC_LOG=1 BOX64_DYNAREC_MISSING=1 WINEDEBUG=warn+all BOX64_DLSYM_ERROR=1 WINEDEBUG=+err taskset -c 4-7 box64 wine64 explorer /desktop=shell,800x600 $PREFIX/glibc/opt/apps/DARKOS_configuration.exe >/sdcard/darkos/darkos.log 2>&1 &")
 os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
@@ -113,6 +114,7 @@ def reboot():
     exec(open('/data/data/com.termux/files/usr/glibc/opt/wine/os.conf').read())
     exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
     exec(open('/sdcard/darkos/darkos_custom.conf').read())
+    exec(open('/sdcard/darkos/VKD3D.conf').read())
     os.system("BOX64_LOG=1 BOX64_SHOWSEGV=1 BOX64_DYNAREC_LOG=1 BOX64_DYNAREC_MISSING=1 WINEDEBUG=warn+all BOX64_DLSYM_ERROR=1 WINEDEBUG=+err taskset -c 4-7 box64 wine64 explorer /desktop=shell,800x600 $PREFIX/glibc/opt/apps/DARKOS_configuration.exe >/sdcard/darkos/darkos.log 2>&1 &")
     os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
     reboot()
