@@ -71,6 +71,9 @@ def create_wine_prefix():
         os.system(f'box64 wine64 "$PREFIX/glibc/opt/wine/{container}/wine/add-ons.bat" &>/dev/null')
         print("add-ons installed")
         os.remove(f"/data/data/com.termux/files/usr/glibc/opt/wine/{container}/add-ons.bat")
+    print(f"{R}[{W}-{R}]{G}{BOLD} Recovering Savegames... {W}")
+    os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/')
+    os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     print(f"{R}[{W}-{R}]{G}{BOLD} Done! {W}")
     print(f"{G}{BOLD} prefix done enjoy 🤪 {W}")
     time.sleep(1)
@@ -80,6 +83,11 @@ def create_wine_prefix():
     subprocess.run(["bash", "darkos"])
     exit()
 def start_wine():
+    with open("last_container_savegame", "r") as container_info:
+    container_id = container_info.read().strip()
+    if container_id != container:
+        os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/')
+        os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     os.system("$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionMode:custom &>/dev/null &")
     os.system(f"$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionCustom:{res} &>/dev/null &")
     os.system(f'WINEDLLOVERRIDES="winegstreamer=disabled" box64 wine64 explorer /desktop=shell,{res} $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &')
@@ -105,6 +113,7 @@ def restart_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.reboot"
         while os.path.exists(file_path):
             time.sleep(1) 
+        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/')
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system("pkill -9 '.exe$'")
@@ -115,6 +124,7 @@ def update_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.update"
         while os.path.exists(file_path):
             time.sleep(1)
+        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/')
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system(f"touch {file_path}")
@@ -147,13 +157,15 @@ def shutdown_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.shutdown"
         while os.path.exists(file_path):
             time.sleep(1) 
+        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/')
         os.system(f"touch {file_path}")
         stop_darkos()
 def debug_wine():
     while True:
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.debug"
         while os.path.exists(file_path):
-            time.sleep(1) 
+            time.sleep(1)
+        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/') 
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system(f"touch {file_path}")
@@ -164,6 +176,7 @@ def settings_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.setting"
         while os.path.exists(file_path):
             time.sleep(1) 
+        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/')
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system(f"touch {file_path}")
@@ -175,6 +188,7 @@ def settings_wine():
 def input_action():
     while True:
         stop = input()
+        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/')
         if stop != "1" and stop != "2" and stop != "3":
             print("")
             print(f"{G}{BOLD} Rebooting......... {W}")
@@ -204,6 +218,7 @@ def restart_program():
         load_conf()
     start_wine()
 def stop_darkos():
+    os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/')
     os.system("box64 wineserver -k")
     os.system('pkill -f "app_process / com.termux.x11"')
     os.system('pkill -f pulseaudio')
