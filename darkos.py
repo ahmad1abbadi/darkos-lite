@@ -50,7 +50,6 @@ def wine_container():
     else:
         conf_path = f"/data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/os.conf"
         wine_prefix = f"/data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/.wine"
-        os.system("chmod +x $PREFIX/glibc/bin/box86")
         os.system("chmod +x $PREFIX/glibc/bin/box64")
         os.system(f"chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/wine")
         os.system(f"chmod +x /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/wineserver")
@@ -223,7 +222,7 @@ def winetricks():
             winetricks_verb = "fonts"
         else:
             winetricks_verb = "settings"
-        os.system(f"clear")
+        os.system("clear")
         print("Enter package (enter 0 to go back, 1 to print all available packages):")
         winetricks_package = input()
         if winetricks_package == "1":
@@ -309,7 +308,7 @@ def uninstall_wine9():
         if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/.wine"):
             shutil.rmtree('/data/data/com.termux/files/usr/glibc/opt/wine/1/.wine')
 def recreate_prefix_wineAZ():
-    print("select version of wine you want to recreate_prefix:")
+    print("select version of wine you want to recreate prefix:")
     print("")
     if os.path.exists("/data/data/com.termux/files/usr/glibc/opt/wine/1/.wine"):
         print(" 1) remove prefix on container 1")
@@ -321,6 +320,7 @@ def recreate_prefix_wineAZ():
     print(" else) back to settings menu")
     print("")
     user_input = input()
+    os.system(f'rsync -av /data/data/com.termux/files/usr/glibc/opt/wine/{user_input}/.wine/drive_c/ /sdcard/darkos-savegames/users &>/dev/null')
     if user_input not in ["1", "2", "3"]:
         change_setting()
     elif user_input == "1":
@@ -583,6 +583,7 @@ def build_box64():
     elif bschoice == "2":
         badsignal = "OFF"
     print("")
+    os.system("clear")
     os.system("apt install cmake-glibc make-glibc python-glibc -y")
     os.system("pkg install -y git")
     os.system(f"unset LD_PRELOAD; export GLIBC_PREFIX=$PREFIX/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL={badsignal} -D{sdver}=ON -DBOX32={box32}; make -j8; make install")

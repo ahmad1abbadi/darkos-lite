@@ -15,18 +15,18 @@ read -t 2 -n1 -s key
 if [[ "$key" == "1" ]]; then
     echo "${G}${BOLD} Safe MODE DARKOS-lite.....STARTING"${W}
     termux-x11 :0 &>/dev/null &
-   # pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1 &>/dev/null
+    # pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1 &>/dev/null
   
-   if [[ -f "/system/lib64/libskcodec.so" ]] ; then
-  LD_PRELOAD="/system/lib64/libskcodec.so" pulseaudio --start --exit-idle-time=-1 &
-  sleep 1
-  pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 
+    if [[ -f "/system/lib64/libskcodec.so" ]] ; then
+        LD_PRELOAD="/system/lib64/libskcodec.so" pulseaudio --start --exit-idle-time=-1 &
+        sleep 1
+        pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 
 
-else
-   pulseaudio --start --exit-idle-time=-1 &
-   sleep 1
-   pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1
-fi
+    else
+        pulseaudio --start --exit-idle-time=-1 &
+        sleep 1
+        pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1
+    fi
 
     python3 $PREFIX/bin/darkos.py $@
     exit 0

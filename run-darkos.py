@@ -63,32 +63,36 @@ def create_wine_prefix():
     os.system(f'ln -s /sdcard/darkos "{wine_prefix}/dosdevices/e:" &>/dev/null')
     os.system(f'ln -s /data/data/com.termux/files "{wine_prefix}/dosdevices/z:"')
     print(f"{R}[{W}-{R}]{G}{BOLD} Installing OS stuff... {W}")
-    os.system(f'wget https://github.com/ahmad1abbadi/extra/releases/download/update/mediafoundation-fix.zip -O $PREFIX/glibc/opt/apps/mf-fix.zip')
-    os.system(f'unzip -o $PREFIX/glibc/opt/apps/mf-fix.zip -d $PREFIX/glibc/opt/apps/mf-fix/')
-    os.system(f'chmod -R 775 $PREFIX/glibc/opt/apps/mf-fix')
+    os.system(f'wget https://github.com/ahmad1abbadi/extra/releases/download/update/mediafoundation-fix.zip -O $PREFIX/glibc/opt/apps/mf-fix.zip &>/dev/null')
+    os.system(f'unzip -o $PREFIX/glibc/opt/apps/mf-fix.zip -d $PREFIX/glibc/opt/apps/mf-fix/ &>/dev/null')
+    os.system(f'chmod -R 775 $PREFIX/glibc/opt/apps/mf-fix &>/dev/null')
     os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/Install OS stuff.bat" &>/dev/null')
     os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/mf-fix/install.bat" &>/dev/null')
     if os.path.exists(f"/data/data/com.termux/files/usr/glibc/opt/wine/{container}/add-ons.bat"):
         os.system(f'box64 wine64 "$PREFIX/glibc/opt/wine/{container}/wine/add-ons.bat" &>/dev/null')
         print("add-ons installed")
         os.remove(f"/data/data/com.termux/files/usr/glibc/opt/wine/{container}/add-ons.bat")
-    print(f"{R}[{W}-{R}]{G}{BOLD} Recovering Savegames... {W}")
-    os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/ &>/dev/null')
-    os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     print(f"{R}[{W}-{R}]{G}{BOLD} Done! {W}")
     print(f"{G}{BOLD} prefix done enjoy 🤪 {W}")
     time.sleep(1)
     os.system("box64 wineserver -k &>/dev/null")
     print(f"{G}{BOLD} rebooting..... {W}")
     time.sleep(1)
+    print(f"{R}[{W}-{R}]{G}{BOLD} Recovering Savegames... {W}")
+    os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/ &>/dev/null')
+    os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     subprocess.run(["bash", "darkos"])
     exit()
 def start_wine():
-    with open("/sdcard/darkos/last_container_savegame", "r") as container_info:
-        container_id = container_info.read().strip()
-        if container_id != container:
-            os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/ &>/dev/null')
-            os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
+    if os.path.exists("/sdcard/darkos/last_container_savegame"):
+        with open("/sdcard/darkos/last_container_savegame", "r") as container_info:
+            container_id = container_info.read().strip()
+            if container_id != container:
+                os.system(f'rsync -av /data/data/com.termux/files/usr/glibc/opt/wine/{container_id}/.wine/drive_c/ /sdcard/darkos-savegames/users &>/dev/null')
+                os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/ &>/dev/null')
+                os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
+    else:
+        os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     os.system("$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionMode:custom &>/dev/null &")
     os.system(f"$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionCustom:{res} &>/dev/null &")
     os.system(f'WINEDLLOVERRIDES="winegstreamer=disabled" box64 wine64 explorer /desktop=shell,{res} $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &')
@@ -105,8 +109,6 @@ def start_wine():
     print("")
     print(f"{G}{BOLD} (2) for exit to the {C}TERMINAL{W}")
     print("")
-    print(f"{G}{BOLD} (3) for enter {C}SAFE MODE{W}")
-    print("")
     print(f"{G}{BOLD} Simply press any other key to {C}REBOOT{W}")
     print("")
 def restart_wine():
@@ -114,7 +116,6 @@ def restart_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.reboot"
         while os.path.exists(file_path):
             time.sleep(1) 
-        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system("pkill -9 '.exe$'")
@@ -125,7 +126,6 @@ def update_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.update"
         while os.path.exists(file_path):
             time.sleep(1)
-        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system(f"touch {file_path}")
@@ -158,7 +158,6 @@ def shutdown_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.shutdown"
         while os.path.exists(file_path):
             time.sleep(1) 
-        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
         os.system(f"touch {file_path}")
         stop_darkos()
 def debug_wine():
@@ -166,7 +165,6 @@ def debug_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.debug"
         while os.path.exists(file_path):
             time.sleep(1)
-        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null') 
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system(f"touch {file_path}")
@@ -177,7 +175,6 @@ def settings_wine():
         file_path = "/data/data/com.termux/files/usr/glibc/opt/darkos/file.setting"
         while os.path.exists(file_path):
             time.sleep(1) 
-        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
         os.system("box64 wineserver -k &>/dev/null")
         print(f"{G}{BOLD} Restarting WINE {W}")
         os.system(f"touch {file_path}")
@@ -189,8 +186,7 @@ def settings_wine():
 def input_action():
     while True:
         stop = input()
-        os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
-        if stop != "1" and stop != "2" and stop != "3":
+        if stop != "1" and stop != "2":
             print("")
             print(f"{G}{BOLD} Rebooting......... {W}")
             os.system("box64 wineserver -k &>/dev/null")
@@ -199,19 +195,14 @@ def input_action():
         elif stop == "1":
             stop_darkos()
         elif stop == "2":
-            os.system("box64 wineserver -k")
+            os.system("box64 wineserver -k &>/dev/null")
             os.system('pkill -f "app_process / com.termux.x11"')
             os.system('pkill -f pulseaudio')
             print(f"{G}{BOLD} exiting to the terminal goodbye {W}")
             time.sleep(2)
             os._exit(0)
-        elif stop == "3":
-            os.system("box64 wineserver -k")
-            print(f"{G}{BOLD} Entering Safe Mode {W}")
-            time.sleep(2)
-            os.system("python3 $PREFIX/bin/darkos.py $@")
 def restart_program():
-    extract_and_delete_tar_files()                
+    extract_and_delete_tar_files()
     load_conf()
     if not os.path.exists(wine_prefix):
         create_wine_prefix()
@@ -219,10 +210,10 @@ def restart_program():
         load_conf()
     start_wine()
 def stop_darkos():
-    os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
     os.system("box64 wineserver -k")
     os.system('pkill -f "app_process / com.termux.x11"')
     os.system('pkill -f pulseaudio')
+    os.system(f'rsync -av {wine_prefix}/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
     print(f"{G}{BOLD} shutdown........ {W}")
     os.system("am startservice -a com.termux.service_stop com.termux/.app.TermuxService")
     os.system("pkill -f com.termux.x11")
