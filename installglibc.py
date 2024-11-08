@@ -100,6 +100,7 @@ def create_prefix():
     print("Searching and Recovering previous savegames...")
     if os.path.exists(f"/sdcard/darkos-savegames"):
         print("Previous savegames found! Recovering...")
+        os.system(f'cd /sdcard/darkos-savegames/users/; mv $(ls | grep "^u") $(whoami); cd -')
         os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/ &>/dev/null')
         os.system(f'echo "1" > /sdcard/darkos/last_container_savegame')
     else:
