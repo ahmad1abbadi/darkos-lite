@@ -320,7 +320,7 @@ def recreate_prefix_wineAZ():
     print(" else) back to settings menu")
     print("")
     user_input = input()
-    os.system(f'rsync -av /data/data/com.termux/files/usr/glibc/opt/wine/{user_input}/.wine/drive_c/users /sdcard/darkos-savegames/users &>/dev/null')
+    os.system(f'rsync -av /data/data/com.termux/files/usr/glibc/opt/wine/{user_input}/.wine/drive_c/users/* /sdcard/darkos-savegames/users/ &>/dev/null')
     if user_input not in ["1", "2", "3"]:
         change_setting()
     elif user_input == "1":
