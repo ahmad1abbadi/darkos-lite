@@ -88,7 +88,7 @@ def start_wine():
         with open("/sdcard/darkos/last_container_savegame", "r") as container_info:
             container_id = container_info.read().strip()
             if container_id != container:
-                os.system(f'rsync -av /data/data/com.termux/files/usr/glibc/opt/wine/{container_id}/.wine/drive_c/ /sdcard/darkos-savegames/users &>/dev/null')
+                os.system(f'rsync -av /data/data/com.termux/files/usr/glibc/opt/wine/{container_id}/.wine/drive_c/users /sdcard/darkos-savegames/ &>/dev/null')
                 os.system(f'rsync -av /sdcard/darkos-savegames/users {wine_prefix}/drive_c/ &>/dev/null')
                 os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     else:
