@@ -34,7 +34,7 @@ elif [[ "$key" == " " ]]; then
     echo "${G}${BOLD} Booting DARKOS-lite 🖤 "${W}
 fi
 
-old_version="0.3"
+old_version="0.4"
 new_version=$(curl -s https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt)
 
 if ping -q -c 1 -W 1 google.com >/dev/null; then
