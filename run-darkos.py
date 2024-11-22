@@ -55,7 +55,7 @@ def create_wine_prefix():
         os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{container}/wine/bin/wine $PREFIX/glibc/bin/wine64")
         os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{container}/wine/bin/wine $PREFIX/glibc/opt/wine/{container}/wine/bin/wine64")
     print(f"{R}[{W}-{R}]{G}{BOLD} Creating wine prefix 💫 {W}")
-    os.system(f'WINEDLLOVERRIDES="mscoree=disabled" taskset -c 4-7 box64 wine64 wineboot -u &>/dev/null')
+    os.system(f'WINEUSERNAME="DARKOS" WINEDLLOVERRIDES="mscoree=disabled" BOX64_FUTEX_WAITV=0 box64 wine64 wineboot &>/dev/null')
     os.system(f'cp -r $PREFIX/glibc/opt/Startxmenu/* "{wine_prefix}/drive_c/ProgramData/Microsoft/Windows/Start Menu"')
     os.system(f'rm "{wine_prefix}/dosdevices/z:"')
     os.system(f'ln -s /sdcard/Download "{wine_prefix}/dosdevices/o:" &>/dev/null')
@@ -79,7 +79,7 @@ def create_wine_prefix():
     print(f"{G}{BOLD} rebooting..... {W}")
     time.sleep(1)
     print(f"{R}[{W}-{R}]{G}{BOLD} Recovering Savegames... {W}")
-    os.system(f'rsync -av /sdcard/darkos-savegames/users/* {wine_prefix}/drive_c/users/ &>/dev/null')
+    os.system(f'rsync -a /sdcard/darkos-savegames/users/* {wine_prefix}/drive_c/users/ &>/dev/null')
     os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     subprocess.run(["bash", "darkos"])
     exit()
@@ -88,8 +88,8 @@ def start_wine():
         with open("/sdcard/darkos/last_container_savegame", "r") as container_info:
             container_id = container_info.read().strip()
             if container_id != container:
-                os.system(f'rsync -av /data/data/com.termux/files/usr/glibc/opt/wine/{container_id}/.wine/drive_c/users/* /sdcard/darkos-savegames/users &>/dev/null')
-                os.system(f'rsync -av /sdcard/darkos-savegames/users/* {wine_prefix}/drive_c/users/ &>/dev/null')
+                os.system(f'rsync -a /data/data/com.termux/files/usr/glibc/opt/wine/{container_id}/.wine/drive_c/users/* /sdcard/darkos-savegames/users &>/dev/null')
+                os.system(f'rsync -a /sdcard/darkos-savegames/users/* {wine_prefix}/drive_c/users/ &>/dev/null')
                 os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     else:
         os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
@@ -213,7 +213,7 @@ def stop_darkos():
     os.system("box64 wineserver -k")
     os.system('pkill -f "app_process / com.termux.x11"')
     os.system('pkill -f pulseaudio')
-    os.system(f'rsync -av {wine_prefix}/drive_c/users/* /sdcard/darkos-savegames/users/ &>/dev/null')
+    os.system(f'rsync -a {wine_prefix}/drive_c/users/* /sdcard/darkos-savegames/users/ &>/dev/null')
     print(f"{G}{BOLD} shutdown........ {W}")
     os.system("am startservice -a com.termux.service_stop com.termux/.app.TermuxService")
     os.system("pkill -f com.termux.x11")
