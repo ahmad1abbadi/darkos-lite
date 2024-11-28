@@ -12,14 +12,14 @@ import fnmatch
 current_version = "0.4"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def start_darkos():
-    os.system("clear")
+    #os.system("clear")
     if "LD_PRELOAD" in os.environ:
         del os.environ["LD_PRELOAD"]
     print("Starting")
     os.system("termux-x11 :0 &>/dev/null &")
     os.system('pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1 &>/dev/null')
 def wine_container():
-    os.system("clear")
+    #os.system("clear")
     photo()
     print("Select Wine container:")
     
@@ -157,7 +157,7 @@ def main():
         else:
             print("something went wrong please send this error to developer")
 def winetricks():
-    os.system("clear")
+    #os.system("clear")
     photo()
     print(" winetricks menu : ")
     print("")
@@ -178,7 +178,7 @@ def winetricks():
         exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
         exec(open('/sdcard/darkos/darkos_custom.conf').read())
         exec(open('/sdcard/darkos/VKD3D.conf').read())
-        os.system("clear")
+        #os.system("clear")
         photo()
         print("loading...... winetrick")
         print("winetricks working just wait its take 1 minute to launch menu if you want to close it and back to main menu press control+C")
@@ -190,7 +190,7 @@ def winetricks():
         exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
         exec(open('/sdcard/darkos/darkos_custom.conf').read())
         exec(open('/sdcard/darkos/VKD3D.conf').read())
-        os.system("clear")
+        #os.system("clear")
         photo()
         print("winetrick verbs ready to use on chosen container. Select the desired one:")
         print("")
@@ -222,7 +222,7 @@ def winetricks():
             winetricks_verb = "fonts"
         else:
             winetricks_verb = "settings"
-        os.system("clear")
+        #os.system("clear")
         print("Enter package (enter 0 to go back, 1 to print all available packages):")
         winetricks_package = input()
         if winetricks_package == "1":
@@ -259,7 +259,7 @@ def start_container():
     res = current_resolution
     os.system("taskset -c 4-7 box64 wine64 explorer /desktop=shell," + res + " $PREFIX/glibc/opt/apps/run.exe &>/dev/null &")
     os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
-    os.system("clear")
+    #os.system("clear")
     os.system("python3 $PREFIX/bin/photo.py")
     print("exit 1️⃣")
     user_input = input("Enter 1 to stop: ")
@@ -273,7 +273,7 @@ def start_container():
     main_menu()
         
 def uninstall_wine():
-    os.system("clear")
+    #os.system("clear")
     photo()
     print("Are you sure you want to delete the wine version?")
     print("")
@@ -341,7 +341,7 @@ def install_wine9():
     os.system("tar -xJf wine-default.tar.xz -C $PREFIX/glibc/opt/wine/1")
     os.remove("wine-default.tar.xz")
 def auto_start():
-    os.system("clear")
+    #os.system("clear")
     photo()
     print(" select what you refer:")
     print("")
@@ -386,7 +386,7 @@ def auto_start():
             time.sleep(2)
             change_setting()
 def autoclean_ram():
-    os.system("clear")
+    #os.system("clear")
     photo()
     print(" select what you refer:")
     print("")
@@ -435,7 +435,7 @@ def autoclean_ram():
             time.sleep(2)
             change_setting()
 def change_setting():
-    os.system("clear")
+    #os.system("clear")
     photo()
     print("settings ⚙️")
     print("1) Update OS 👑")
@@ -495,7 +495,7 @@ def change_setting():
                 change_setting()
         except urllib.error.HTTPError as e:
             if e.code == 404:
-                os.system("clear")
+                #os.system("clear")
                 print("no internet connection 😵 backing to the settings")
                 time.sleep(3)
                 change_setting()
@@ -518,7 +518,7 @@ def change_setting():
     elif choice == "10":
         build_box64()
     elif choice == "7":
-        os.system("clear")
+        #os.system("clear")
         photo()
         print("loading.........")
         reload()
@@ -583,7 +583,7 @@ def build_box64():
     elif bschoice == "2":
         badsignal = "OFF"
     print("")
-    os.system("clear")
+    #os.system("clear")
     os.system("apt install cmake-glibc make-glibc python-glibc -y")
     os.system("pkg install -y git")
     os.system("rm -rf ~/box64")
@@ -633,7 +633,7 @@ def new_sesson():
     --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
     --es com.termux.RUN_COMMAND_SESSION_ACTION '1' &> /dev/null ")
 def main_menu():
-    os.system("clear")
+    #os.system("clear")
     photo()
     print("welcome to darkos-lite safe mode")
     print("")
@@ -654,7 +654,7 @@ def main_menu():
         change_setting()
     elif choice == "3":
         print("")
-        os.system("clear")
+        #os.system("clear")
         photo()
         print("")
         print(" Restarting.....")
@@ -663,7 +663,7 @@ def main_menu():
         subprocess.run(["bash", "darkos"])
     elif choice == "4":
         print("")
-        os.system("clear")
+        #os.system("clear")
         photo()
         print("")
         print("good bye 😭")

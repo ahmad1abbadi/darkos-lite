@@ -18,7 +18,7 @@ def remove():
             os.remove(file_path)
             print(f'{filename} has been deleted.')
 os.system("am start -n com.termux/.HomeActivity")
-os.system("clear")
+#os.system("clear")
 os.system("python3 $PREFIX/bin/photo.py")
 time.sleep(2)   
 print("")

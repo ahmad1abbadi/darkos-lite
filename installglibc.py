@@ -1,6 +1,6 @@
 import os, shutil, time, subprocess
 def start_darkos():
-    os.system("clear")
+    #os.system("clear")
     if "LD_PRELOAD" in os.environ:
         del os.environ["LD_PRELOAD"]
     print("Starting")
@@ -165,8 +165,8 @@ def scripts():
     os.system("wget -O $HOME/.termux/font.ttf https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/terminal_utility/ubuntu-mono.ttf &>/dev/null")
 def remove():
     os.system("rm glibc-darkos-lite.tar.xz install installglibc.py")
-    os.system("clear")
-os.system("clear")
+    #os.system("clear")
+#os.system("clear")
 print(" Darkos-lite installation is begining 😉")
 print("")
 edit_bashrc()
