@@ -114,6 +114,16 @@ def create_prefix():
     print(f'done')
     print("")
     print("starting DARK OS ")
+    file_path = os.path.expanduser("~/.termux/termux.properties")
+    with open(file_path, "r") as file:
+        lines = file.readlines()
+    with open(file_path, "w") as file:
+        for line in lines:
+            if line.startswith("# allow-external-apps = true"):
+                line = line.replace("# ", "")
+            file.write(line)
+            #print(f"File updated: {file_path}")
+    os.system("termux-reload-settings")
     time.sleep(2)
     subprocess.run(["bash", "darkos"])
 def install_mono():
