@@ -115,7 +115,7 @@ def create_prefix():
     print("")
     print("starting DARK OS ")
     time.sleep(2)
-    os.system("darkos")
+    subprocess.run(["bash", "darkos"])
 def install_mono():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/mono.tar.xz")
     os.system("tar -xJf mono.tar.xz")
