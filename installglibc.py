@@ -1,4 +1,4 @@
-import os, shutil, time
+import os, shutil, time, subprocess
 def start_darkos():
     os.system("clear")
     if "LD_PRELOAD" in os.environ:
