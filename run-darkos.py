@@ -55,7 +55,7 @@ def create_wine_prefix():
         os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{container}/wine/bin/wine $PREFIX/glibc/bin/wine64")
         os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{container}/wine/bin/wine $PREFIX/glibc/opt/wine/{container}/wine/bin/wine64")
     print(f"{R}[{W}-{R}]{G}{BOLD} Creating wine prefix 💫 {W}")
-    os.system(f'WINEUSERNAME="DARKOS" WINEDLLOVERRIDES="mscoree=disabled" BOX64_FUTEX_WAITV=0 box64 wine64 wineboot &>/dev/null')
+    os.system(f'WINEUSERNAME="DARKOS" WINEDLLOVERRIDES="mscoree=disabled" BOX64_FUTEX_WAITV=0 box64 wine64 wineboot &>/sdcard/darkos/run-darkos.log')
     os.system(f'cp -r $PREFIX/glibc/opt/Startxmenu/* "{wine_prefix}/drive_c/ProgramData/Microsoft/Windows/Start Menu"')
     os.system(f'rm "{wine_prefix}/dosdevices/z:"')
     os.system(f'ln -s /sdcard/Download "{wine_prefix}/dosdevices/o:" &>/dev/null')

@@ -86,7 +86,7 @@ def create_prefix():
     os.environ.pop('LD_PRELOAD', None)
     print("Creating wine prefix 💫")
     os.system(f"tar -xJf $PREFIX/glibc/opt/darkos/XinputBridge.tar.xz -C /data/data/com.termux/files/usr/glibc/opt/wine/1/wine/lib/wine/ &>/dev/null")
-    os.system(f'WINEUSERNAME="DARKOS" WINEDLLOVERRIDES="mscoree=disabled" box64 wine64 wineboot &>/dev/null')
+    os.system(f'WINEUSERNAME="DARKOS" WINEDLLOVERRIDES="mscoree=disabled" box64 wine64 wineboot &>/sdcard/darkos/installglibc.log')
     os.system(f'cp -r $PREFIX/glibc/opt/Startxmenu/* "{wine_prefix}/drive_c/ProgramData/Microsoft/Windows/Start Menu"')
     os.system(f'rm "{wine_prefix}/dosdevices/z:"')
     os.system(f'ln -s /sdcard/Download "{wine_prefix}/dosdevices/o:" &>/dev/null')

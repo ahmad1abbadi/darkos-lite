@@ -65,7 +65,7 @@ def recreate_prefix():
         os.environ.pop('WINEESYNC_TERMUX', None)
         os.environ.pop('BOX86_DYNAREC_CALLRET', None)
         os.environ.pop('BOX64_DYNAREC_CALLRET', None)
-        os.system(f'WINEUSERNAME="DARKOS" WINEDLLOVERRIDES="mscoree=disabled" BOX64_FUTEX_WAITV=0 box64 wine64 wineboot &>/dev/null')
+        os.system(f'WINEUSERNAME="DARKOS" WINEDLLOVERRIDES="mscoree=disabled" BOX64_FUTEX_WAITV=0 box64 wine64 wineboot &>/sdcard/darkos/debug-darkos.log')
         os.system(f'cp -r $PREFIX/glibc/opt/Startxmenu/* "{wine_prefix}/drive_c/ProgramData/Microsoft/Windows/Start Menu"')
         os.system(f'rm "{wine_prefix}/dosdevices/z:"')
         os.system(f'ln -s /sdcard/Download "{wine_prefix}/dosdevices/o:" &>/dev/null')
