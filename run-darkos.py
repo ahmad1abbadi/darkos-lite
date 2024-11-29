@@ -98,7 +98,7 @@ def start_wine():
     os.system(f'WINEDLLOVERRIDES="winegstreamer=disabled" box64 wine64 explorer /desktop=shell,{res} $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &')
     time.sleep(2)
     os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
-    #os.system("clear")
+    os.system("clear")
     os.system("python3 $PREFIX/bin/photo.py")
     print("")
     print(f" {R}{BOLD}D{G}{BOLD}A{Y}{BOLD}R{B}{W}{BOLD}K{R}{BOLD} O{C}{BOLD}S{G}{BOLD} is running...... {W}")

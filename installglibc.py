@@ -1,6 +1,6 @@
 import os, shutil, time, subprocess
 def start_darkos():
-    #os.system("clear")
+    os.system("clear")
     if "LD_PRELOAD" in os.environ:
         del os.environ["LD_PRELOAD"]
     print("Starting")
@@ -113,19 +113,10 @@ def create_prefix():
     os.system("box64 wineserver -k &>/dev/null")
     print(f'done')
     print("")
-    print("starting DARK OS ")
-    file_path = os.path.expanduser("~/.termux/termux.properties")
-    with open(file_path, "r") as file:
-        lines = file.readlines()
-    with open(file_path, "w") as file:
-        for line in lines:
-            if line.startswith("# allow-external-apps = true"):
-                line = line.replace("# ", "")
-            file.write(line)
-            #print(f"File updated: {file_path}")
-    os.system("termux-reload-settings")
-    time.sleep(2)
-    subprocess.run(["bash", "darkos"])
+    print("DarkOS is now installed!. Reboot to apply the changes")
+    print("Press ENTER to shutdown, then please reopen Termux...")
+    input()
+    os.system("am startservice -a com.termux.service_stop com.termux/.app.TermuxService")
 def install_mono():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/mono.tar.xz")
     os.system("tar -xJf mono.tar.xz")
@@ -165,8 +156,8 @@ def scripts():
     os.system("wget -O $HOME/.termux/font.ttf https://raw.githubusercontent.com/ahmad1abbadi/darkos/main/terminal_utility/ubuntu-mono.ttf &>/dev/null")
 def remove():
     os.system("rm glibc-darkos-lite.tar.xz install installglibc.py")
-    #os.system("clear")
-#os.system("clear")
+    os.system("clear")
+os.system("clear")
 print(" Darkos-lite installation is begining 😉")
 print("")
 edit_bashrc()

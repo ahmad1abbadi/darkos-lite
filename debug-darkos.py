@@ -10,10 +10,10 @@ exec(open('/sdcard/darkos/VKD3D.conf').read())
 os.environ["BOX64_TRACE_FILE"]="/sdcard/darkos/trace/trace-%pid.txt"
 os.system("BOX64_LOG=1 BOX64_SHOWSEGV=1 BOX64_DYNAREC_LOG=1 BOX64_DYNAREC_MISSING=1 WINEDEBUG=warn+all BOX64_DLSYM_ERROR=1 WINEDEBUG=+err taskset -c 4-7 box64 wine64 explorer /desktop=shell,800x600 $PREFIX/glibc/opt/apps/DARKOS_configuration.exe >/sdcard/darkos/darkos.log 2>&1 &")
 os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
-#os.system("clear")
+os.system("clear")
 os.system("python3 $PREFIX/bin/photo.py")
 def recreate_prefix():
-    #os.system("clear")
+    os.system("clear")
     os.system("python3 $PREFIX/bin/photo.py")
     print("select wine to recreate:")
     
@@ -81,7 +81,7 @@ def recreate_prefix():
         time.sleep(2)
         os.system("BOX64_LOG=3 BOX64_SHOWSEGV=1 BOX64_DYNAREC_LOG=1 BOX64_DYNAREC_MISSING=1 BOX64_DLSYM_ERROR=1 taskset -c 4-7 box64 wine explorer /desktop=shell,800x600 $PREFIX/glibc/opt/apps/pc.ex >/sdcard/darkos.log 2>&1 &")
         os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
-        #os.system("clear")
+        os.system("clear")
         os.system("python3 $PREFIX/bin/photo.py")
         print("exit 1️⃣")
         user_input = input("Enter 1 to stop: ")
@@ -98,7 +98,7 @@ def recreate_prefix():
       if not os.path.exists(wine_prefix):
         prefix_gstreamer()
 def reboot():
-  #os.system("clear")
+  os.system("clear")
   os.system("python3 $PREFIX/bin/photo.py")
   print(" you are in debug mode... choose what you need to do :")
   print(" note :- this option available just in safe mode.")
