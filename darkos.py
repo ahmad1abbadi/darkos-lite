@@ -524,7 +524,7 @@ def change_setting():
         reload()
         new_sesson()
         print("installing python packages")
-        os.system('pkg install python vulkan-tools python-pip coreutils &> /dev/null')
+        os.system('pkg install python vulkan-tools python3-pip coreutils -y &> /dev/null')
         print("")
         os.system('pip install aiofiles psutil blessings &> /dev/null')
         print("python packages.... 100%")
