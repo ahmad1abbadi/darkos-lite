@@ -417,7 +417,7 @@ def autoclean_ram():
                 f.write(command)
                 for line in lines:
                     f.write(line)
-            print(" autoclean ram activated successfully")
+            print(" autoclean ram activated successfully! Changes will be applied on the next boot")
             time.sleep(2)
             change_setting()
     elif choice == "2":
@@ -431,7 +431,7 @@ def autoclean_ram():
                 for line in lines:
                     if command not in line:
                         f.write(line)
-            print("Autoclean ram deactivated successfully")
+            print("Autoclean ram deactivated successfully! Changes will be applied on the next boot")
             time.sleep(2)
             change_setting()
 def change_setting():
@@ -520,21 +520,70 @@ def change_setting():
     elif choice == "7":
         os.system("clear")
         photo()
-        print("loading.........")
-        reload()
-        new_sesson()
-        print("installing python packages")
-        os.system('pkg install python vulkan-tools python3-pip coreutils -y &> /dev/null')
+        print(" select what you refer:")
         print("")
-        os.system('pip install aiofiles psutil blessings &> /dev/null')
-        print("python packages.... 100%")
+        print(" 1) turn-on CPU BOOST 👍")
         print("")
-        print("starting boost 💥")
-        time.sleep(3)
+        print(" 2) turn-off CPU BOOST 👎")
         print("")
-        print("check the new session for more info 👀 ")
-        time.sleep(5)
-        change_setting()
+        print( "else) back to settings menu")
+        choice = input()
+        if choice != "1" and choice != "2":
+            change_setting()
+        elif choice == "1":
+            reload()
+            print("installing python packages")
+            os.system('pkg install python vulkan-tools python-pip coreutils -y &> /dev/null')
+            print("")
+            os.system('pip install aiofiles psutil blessings &> /dev/null')
+            print("python packages.... 100%")
+            command = "am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
+            -a com.termux.RUN_COMMAND \
+            --es com.termux.RUN_COMMAND_PATH '/data/data/com.termux/files/usr/bin/python' \
+            --esa com.termux.RUN_COMMAND_ARGUMENTS '/data/data/com.termux/files/usr/bin/cpu_boost.py' \
+            --es com.termux.RUN_COMMAND_WORKDIR '/data/data/com.termux/files/home' \
+            --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
+            --es com.termux.RUN_COMMAND_SESSION_ACTION '1' &> /dev/null \n"
+            bashrc_path = os.path.expanduser('~/.bashrc')
+            command_exists = False
+            if os.path.exists(bashrc_path):
+                with open(bashrc_path, 'r') as f:
+                    for line in f:
+                        if command in line:
+                            command_exists = True
+                            print(" CPU BOOST already activated... ")
+                            time.sleep(2)
+                            change_setting()
+            if not command_exists:
+                with open(bashrc_path, 'r') as f:
+                    lines = f.readlines()
+                with open(bashrc_path, 'w') as f:
+                    f.write(command)
+                    for line in lines:
+                        f.write(line)
+                print(" CPU BOOSTER activated successfully! Changes will be applied on the next boot...")
+                time.sleep(2)
+                change_setting()
+        elif choice == "2":
+            command = "am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
+            -a com.termux.RUN_COMMAND \
+            --es com.termux.RUN_COMMAND_PATH '/data/data/com.termux/files/usr/bin/python' \
+            --esa com.termux.RUN_COMMAND_ARGUMENTS '/data/data/com.termux/files/usr/bin/cpu_boost.py' \
+            --es com.termux.RUN_COMMAND_WORKDIR '/data/data/com.termux/files/home' \
+            --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
+            --es com.termux.RUN_COMMAND_SESSION_ACTION '1' &> /dev/null "
+            bashrc_path = os.path.expanduser('~/.bashrc')
+            command_exists = False
+            if os.path.exists(bashrc_path):
+                with open(bashrc_path, 'r') as f:
+                    lines = f.readlines()
+                with open(bashrc_path, 'w') as f:
+                    for line in lines:
+                        if command not in line:
+                            f.write(line)
+                print("CPU BOOSTER deactivated successfully! Changes will be applied on the next boot...")
+                time.sleep(2)
+                change_setting()
 def build_box64():
     print("")
     print("This will build an updated Box64 bin from ptitSeb github source")
@@ -624,14 +673,6 @@ def reload():
             file.write(line)
             #print(f"File updated: {file_path}")
     os.system("termux-reload-settings")
-def new_sesson():
-    os.system("am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
-    -a com.termux.RUN_COMMAND \
-    --es com.termux.RUN_COMMAND_PATH '/data/data/com.termux/files/usr/bin/python' \
-    --esa com.termux.RUN_COMMAND_ARGUMENTS '/data/data/com.termux/files/usr/bin/cpu_boost.py' \
-    --es com.termux.RUN_COMMAND_WORKDIR '/data/data/com.termux/files/home' \
-    --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
-    --es com.termux.RUN_COMMAND_SESSION_ACTION '1' &> /dev/null ")
 def main_menu():
     os.system("clear")
     photo()

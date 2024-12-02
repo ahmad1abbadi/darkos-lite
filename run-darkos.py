@@ -26,8 +26,10 @@ def extract_and_delete_tar_files():
             if filename.endswith(".tar"):
                 tar_file = os.path.join(path, filename)
                 if os.path.exists(os.path.join(path, ".wine")):
+                    os.system(f"rm -rf {path}/.wine")
                     shutil.rmtree(os.path.join(path, ".wine"))
                 if os.path.exists(os.path.join(path, "wine")):
+                    os.system(f"rm -rf {path}/wine")
                     shutil.rmtree(os.path.join(path, "wine"))
                 subprocess.run(["tar", "-xf", tar_file, "-C", path])
                 os.remove(tar_file)
