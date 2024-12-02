@@ -448,13 +448,22 @@ def change_setting():
     print("8) Autoclean RAM 🔥 (clean RAM on every DarkOS launch. EXPERIMENTAL)")
     print("9) Move Games to Termux Internal Filesystem")
     print("10) Build Box64")
+    print("11) Enable external storage")
     
     print("else) Back 🔙")
     print("")
     choice = input()
-    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9" and choice != "10":
+    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9" and choice != "10" and choice != "11":
         print("...........")
         main_menu()
+    elif choice == "11":
+      os.system("df | grep 'storage' | grep -v 'emulated' | awk '{print $NF}'")
+      os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/1/.wine/dosdevices/f:")
+      os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/2/.wine/dosdevices/f:")
+      os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/3/.wine/dosdevices/f:")
+      print("Now the external storage showld be connected to Drive F on DarkOS. Check with explorer! ")
+      time.sleep(3)
+      change_setting()
     elif choice == "2":
       print(" Do you really want to repair emu files ? This will delete all your files inside the drive C in container 1")
       print(" yes = y")
