@@ -444,7 +444,7 @@ def change_setting():
     print("4) Delete prefix 🪡")
     print("5) Change auto start setting 🖱️")
     print("6) Debug mode 🐞") 
-    print("7) Boost cpu 🔥 (needed root in some devices)")
+    print("7) Boost cpu 🔥 (Root no longer needed!)")
     print("8) Autoclean RAM 🔥 (clean RAM on every DarkOS launch. EXPERIMENTAL)")
     print("9) Move Games to Termux Internal Filesystem")
     print("10) Build Box64")
@@ -457,6 +457,9 @@ def change_setting():
         print("...........")
         main_menu()
     elif choice == "11":
+      os.system("rm -rf $PREFIX/glibc/opt/wine/1/.wine/dosdevices/f: &>/dev/null")
+      os.system("rm -rf $PREFIX/glibc/opt/wine/2/.wine/dosdevices/f: &>/dev/null")
+      os.system("rm -rf $PREFIX/glibc/opt/wine/3/.wine/dosdevices/f: &>/dev/null")
       os.system("df | grep 'storage' | grep -v 'emulated' | awk '{print $NF}'")
       os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/1/.wine/dosdevices/f:")
       os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/2/.wine/dosdevices/f:")
