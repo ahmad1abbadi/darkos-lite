@@ -18,8 +18,8 @@ def termux_pkg():
     os.system("apt install tur-repo &>/dev/null")
     os.system("apt install virglrenderer-android virglrenderer-mesa-zink -y &>/dev/null")
     print("virgl server...... installed successfully")
-    #os.system("apt upgrade mangohud-glibc -y &>/dev/null")
-    #print("mangohud...... updated successfully")
+    os.system("apt upgrade mangohud-glibc -y &>/dev/null")
+    print("mangohud...... updated successfully")
     print("")
 def install_glibc_AZ():
     os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/glibc-darkos-lite.tar.xz")

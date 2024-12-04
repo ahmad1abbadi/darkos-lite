@@ -63,8 +63,8 @@ def wine_container():
             os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/wine64 $PREFIX/glibc/bin/wine64")
         os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/wineserver $PREFIX/glibc/bin/wineserver")
         os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/wineboot $PREFIX/glibc/bin/wineboot")
-        os.system(f"ln -sf /data/data/com.termux/files/us/glibc/opt/wine/{prefix_path}/wine/bin/winecfg $PREFIX/glibc/bin/winecfg")
-        #os.system("ln -sf /var/lib/dbus/machine-id /etc/machine-id")
+        os.system(f"ln -sf /data/data/com.termux/files/usr/glibc/opt/wine/{prefix_path}/wine/bin/winecfg $PREFIX/glibc/bin/winecfg")
+        os.system("ln -sf /data/data/com.termux/files/usr/var/lib/dbus/machine-id /etc/machine-id")
         os.environ.pop('LD_PRELOAD', None)
         ### AZ DARK 
         if os.path.exists(conf_path):
@@ -461,9 +461,9 @@ def change_setting():
       os.system("rm -rf $PREFIX/glibc/opt/wine/2/.wine/dosdevices/f: &>/dev/null")
       os.system("rm -rf $PREFIX/glibc/opt/wine/3/.wine/dosdevices/f: &>/dev/null")
       os.system("df | grep 'storage' | grep -v 'emulated' | awk '{print $NF}'")
-      os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/1/.wine/dosdevices/f:")
-      os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/2/.wine/dosdevices/f:")
-      os.system(f"ln -s $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/3/.wine/dosdevices/f:")
+      os.system(f"ln -sf $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/1/.wine/dosdevices/f:")
+      os.system(f"ln -sf $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/2/.wine/dosdevices/f:")
+      os.system(f"ln -sf $(df | grep 'storage' | grep -v 'emulated' | awk '{{print $NF}}' &>/dev/null) $PREFIX/glibc/opt/wine/3/.wine/dosdevices/f:")
       print("Now the external storage showld be connected to Drive F on DarkOS. Check with explorer! ")
       time.sleep(3)
       change_setting()
