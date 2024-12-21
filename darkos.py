@@ -239,7 +239,7 @@ def winetricks():
             print("backing to main menu")
             time.sleep(2)
             main_menu()
-        os.system(f"BOX64_LOG=0 LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/bin/winetricks {winetricks_verb} {winetricks_package} 2>/dev/null | grep -v 'Box64 with Dynarec'")
+        os.system(f"BOX64_LOG=0 BOX64_LD_LIBRARY_PATH= LD_PRELOAD= WINESERVER=$PREFIX/glibc/bin/wineserver WINE=$PREFIX/glibc/bin/wine64 $PREFIX/glibc/bin/box64 $PREFIX/glibc/opt/box64_bash $PREFIX/bin/winetricks {winetricks_verb} {winetricks_package} 2>/sdcard/darkos/winetricks.log | grep -v 'Box64 with Dynarec'")
         print("")
         print("winetrick packages installed successfully...👍 ")
         print("backing to main menu..... 🔁")
@@ -449,11 +449,12 @@ def change_setting():
     print("9) Move Games to Termux Internal Filesystem")
     print("10) Build Box64")
     print("11) Enable external storage")
+    print("12) Switch GStreamer/MediaFoundation (needed for some games like GoW)")
     
     print("else) Back 🔙")
     print("")
     choice = input()
-    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9" and choice != "10" and choice != "11":
+    if choice != "1" and choice != "2" and choice != "3" and choice != "4" and choice != "5" and choice != "6" and choice != "7" and choice != "8" and choice != "9" and choice != "10" and choice != "11" and choice != "12":
         print("...........")
         main_menu()
     elif choice == "11":
@@ -467,12 +468,53 @@ def change_setting():
       print("Now the external storage showld be connected to Drive F on DarkOS. Check with explorer! ")
       time.sleep(3)
       change_setting()
+    elif choice == "12":
+      print("- Installing GStreamer requires 300MB of free space. Brings more compatibility for games that need GStreamer, like GoW.\
+      Once installed, it activates for every container created/to be created, and CAN'T BE UNDONE")
+      print("- Installing MediaFoundation requires 20MB or less of free space. Less compatible, but enough for the mayority of games.\
+      It needs to be installed every time you create a new container")
+      print("")
+      print(" Select wich one you'll use: ")
+      print(" 1) GStreamer")
+      print(" 2) MediaFoundation")
+      print("")
+      print(" else) Back to main menu")
+      stop = input()
+      if stop != "1" and stop != "2":
+        print("wrong choice backing to main menu")
+        time.sleep(1)
+        change_setting()
+      elif stop == "1":
+        if internet_connected():
+            os.system("apt install gst* -y &>/dev/null")
+            os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/gstreamer.tar.xz")
+            os.system("tar -xJf gstreamer.tar.xz -C $PREFIX/glibc/")
+            print("GStreamer is now installed ()")
+            time.sleep(3)
+            change_setting()
+        else:
+            print("No internet connection available. Aborting operation.")
+            time.sleep(2)
+            change_setting()
+      elif stop == "2":
+        if internet_connected():
+            os.system(f'wget https://github.com/ahmad1abbadi/extra/releases/download/update/mediafoundation-fix.zip -O $PREFIX/glibc/opt/apps/mf-fix.zip &>/dev/null')
+            os.system(f'unzip -o $PREFIX/glibc/opt/apps/mf-fix.zip -d $PREFIX/glibc/opt/apps/mf-fix/ &>/dev/null')
+            os.system(f'chmod -R 775 $PREFIX/glibc/opt/apps/mf-fix &>/dev/null')
+            os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/mf-fix/install.bat" &>/dev/null')
+            change_setting()
+        else:
+            print("No internet connection available. Aborting operation.")
+            time.sleep(2)
+            change_setting()
+      else:
+        change_setting()
     elif choice == "2":
       print(" Do you really want to repair emu files ? This will delete all your files inside the drive C in container 1")
       print(" yes = y")
       print(" no = n")
       stop = input()
-      if stop != "y" and choice != "n":
+      if stop != "y" and stop != "n":
           print("wrong choice backing to main menu")
           time.sleep(1)
           change_setting()

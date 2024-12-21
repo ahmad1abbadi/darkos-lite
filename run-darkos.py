@@ -27,10 +27,8 @@ def extract_and_delete_tar_files():
                 tar_file = os.path.join(path, filename)
                 if os.path.exists(os.path.join(path, ".wine")):
                     os.system(f"rm -rf {path}/.wine")
-                    shutil.rmtree(os.path.join(path, ".wine"))
                 if os.path.exists(os.path.join(path, "wine")):
                     os.system(f"rm -rf {path}/wine")
-                    shutil.rmtree(os.path.join(path, "wine"))
                 subprocess.run(["tar", "-xf", tar_file, "-C", path])
                 os.remove(tar_file)
                 if os.path.exists(os.path.join(path, "box64")):
@@ -65,11 +63,7 @@ def create_wine_prefix():
     os.system(f'ln -s /sdcard/darkos "{wine_prefix}/dosdevices/e:" &>/dev/null')
     os.system(f'ln -s /data/data/com.termux/files "{wine_prefix}/dosdevices/z:"')
     print(f"{R}[{W}-{R}]{G}{BOLD} Installing OS stuff... {W}")
-    os.system(f'wget https://github.com/ahmad1abbadi/extra/releases/download/update/mediafoundation-fix.zip -O $PREFIX/glibc/opt/apps/mf-fix.zip &>/dev/null')
-    os.system(f'unzip -o $PREFIX/glibc/opt/apps/mf-fix.zip -d $PREFIX/glibc/opt/apps/mf-fix/ &>/dev/null')
-    os.system(f'chmod -R 775 $PREFIX/glibc/opt/apps/mf-fix &>/dev/null')
     os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/Install OS stuff.bat" &>/dev/null')
-    os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/mf-fix/install.bat" &>/dev/null')
     if os.path.exists(f"/data/data/com.termux/files/usr/glibc/opt/wine/{container}/add-ons.bat"):
         os.system(f'box64 wine64 "$PREFIX/glibc/opt/wine/{container}/wine/add-ons.bat" &>/dev/null')
         print("add-ons installed")
@@ -97,7 +91,7 @@ def start_wine():
         os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
     os.system("$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionMode:custom &>/dev/null &")
     os.system(f"$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionCustom:{res} &>/dev/null &")
-    os.system(f'WINEDLLOVERRIDES="winegstreamer=disabled" box64 wine64 explorer /desktop=shell,{res} $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &')
+    os.system(f'box64 wine64 explorer /desktop=shell,{res} $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &')
     time.sleep(2)
     os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
     os.system("clear")

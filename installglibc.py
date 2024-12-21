@@ -16,7 +16,7 @@ def termux_pkg():
     os.system("pkg install wget libpng xorg-xrandr mesa -y --no-install-recommends &>/dev/null")
     print("wget+mesa........ installed successfully")
     os.system("apt install tur-repo &>/dev/null")
-    os.system("apt install virglrenderer-android virglrenderer-mesa-zink -y &>/dev/null")
+    os.system("apt install virglrenderer-android virglrenderer-mesa-zink pv -y &>/dev/null")
     print("virgl server...... installed successfully")
     print("")
 def install_glibc_AZ():
@@ -92,11 +92,7 @@ def create_prefix():
     os.system(f'ln -s /sdcard/darkos "{wine_prefix}/dosdevices/e:" &>/dev/null')
     os.system(f'ln -s /data/data/com.termux/files "{wine_prefix}/dosdevices/z:"')
     print("Installing OS stuff...")
-    os.system(f'wget https://github.com/ahmad1abbadi/extra/releases/download/update/mediafoundation-fix.zip -O $PREFIX/glibc/opt/apps/mf-fix.zip &>/dev/null')
-    os.system(f'unzip -o $PREFIX/glibc/opt/apps/mf-fix.zip -d $PREFIX/glibc/opt/apps/mf-fix/ &>/dev/null')
-    os.system(f'chmod -R 775 $PREFIX/glibc/opt/apps/mf-fix &>/dev/null')
     os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/Install OS stuff.bat" &>/dev/null')
-    os.system(f'box64 wine64 "$PREFIX/glibc/opt/apps/mf-fix/install.bat" &>/dev/null')
     print("Searching and Recovering previous savegames...")
     if os.path.exists(f"/sdcard/darkos-savegames"):
         print("Previous savegames found! Recovering...")
