@@ -445,11 +445,11 @@ def change_setting():
     print("5) Change auto start setting 🖱️")
     print("6) Debug mode 🐞") 
     print("7) Boost cpu 🔥 (Root no longer needed!)")
-    print("8) Autoclean RAM 🔥 (clean RAM on every DarkOS launch. EXPERIMENTAL)")
+    print("8) Autoclean RAM 🔥 (clean RAM on every DarkOS launch.)")
     print("9) Move Games to Termux Internal Filesystem")
     print("10) Build Box64")
     print("11) Enable external storage")
-    print("12) Install GStreamer/MediaFoundation (needed for some games like GoW)")
+    print("12) Install GStreamer/MediaFoundation (needed for games like GoW)")
     
     print("else) Back 🔙")
     print("")
@@ -469,10 +469,8 @@ def change_setting():
       time.sleep(3)
       change_setting()
     elif choice == "12":
-      print("- Installing GStreamer requires 300MB of free space. Brings more compatibility for games that need GStreamer, like GoW.\
-      Once installed, it activates for every container created/to be created, and CAN'T BE UNDONE")
-      print("- Installing MediaFoundation requires 20MB or less of free space. Less compatible, but enough for the mayority of games.\
-      It needs to be installed every time you create a new container")
+      print("- Installing GStreamer requires 300MB of free space. Brings more compatibility for games that need GStreamer, like GoW. Once installed, it activates for every container created/to be created, and CAN'T BE UNDONE")
+      print("- Installing MediaFoundation requires 20MB or less of free space. Less compatible, but enough for the mayority of games. It needs to be installed every time you create a new container")
       print("")
       print(" Select wich one you'll use: ")
       print(" 1) GStreamer")
@@ -489,6 +487,7 @@ def change_setting():
             os.system("apt install gst* -y &>/dev/null")
             os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/gstreamer.tar.xz")
             os.system("tar -xJf gstreamer.tar.xz -C $PREFIX/glibc/")
+            os.system("rm gstreamer.tar.xz")
             print("GStreamer is now installed ()")
             time.sleep(3)
             change_setting()
