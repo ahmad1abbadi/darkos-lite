@@ -486,7 +486,7 @@ def change_setting():
         if internet_connected():
             os.system("apt install gst* -y &>/dev/null")
             os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/gstreamer.tar.xz")
-            os.system("tar -xJf gstreamer.tar.xz -C $PREFIX/glibc/")
+            os.system("tar -xf gstreamer.tar.xz -C $PREFIX/glibc/")
             os.system("rm gstreamer.tar.xz")
             print("GStreamer is now installed ()")
             time.sleep(3)
