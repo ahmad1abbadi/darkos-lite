@@ -449,7 +449,7 @@ def change_setting():
     print("9) Move Games to Termux Internal Filesystem")
     print("10) Build Box64")
     print("11) Enable external storage")
-    print("12) Switch GStreamer/MediaFoundation (needed for some games like GoW)")
+    print("12) Install GStreamer/MediaFoundation (needed for some games like GoW)")
     
     print("else) Back 🔙")
     print("")
