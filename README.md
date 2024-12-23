@@ -1,9 +1,7 @@
 ![logo](img/logo.png "logo")
 
 **DarkOS Lite** is a project designed to run Windows x86_64 applications and games in [Termux](https://github.com/termux/termux-app) native GLIBC.
-Based on [DarkOS](https://github.com/ahmad1abbadi/darkos), this version is lighter with some updated libraries.
-It utilizes [Box86](https://github.com/ptitSeb/box86)
-and [Box64](https://github.com/ptitSeb/box86)
+Based on [DarkOS](https://github.com/ahmad1abbadi/darkos), this version is lighter with some updated libraries. [Box64](https://github.com/ptitSeb/box86)
 to run [Wine](https://www.winehq.org/) on android.
 
 # Installation:
