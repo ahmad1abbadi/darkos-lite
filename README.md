@@ -155,32 +155,17 @@ adb shell "/system/bin/device_config put activity_manager max_phantom_processes 
 [PAYPAL](https://paypal.me/GabiAle97?country.x=AR&locale.x=es_XC)
 
 
-## DarkOS Developers 
+## DarkOS-Lite Developers 
 
 [AZ](https://github.com/ahmad1abbadi) 
 
 [Hisham](https://github.com/hisham2630)
 
-[Md arif](https://github.com/sabamdarif)
-
-[zhongerxll](https://github.com/zhongerxll) 
-
-[Ilan12346-maya](https://github.com/Ilan12346-maya)
-  
 [GabiAle97](https://github.com/GabiAle97)
 
 #
 
-thanks to our testers:
-
-GhostDz36, caoji080
-
-#
-Huge thanks to:
-
-[airidosas252](https://github.com/airidosas252) for his turnip and wine builds.
-#
-Special thanks to ptitSeb, Maxython, glibc-runner, hardray, T?aik, zhongerxll , hugo, .[jeezdisreez](https://github.com/Pipetto-crypto), olegos2 and others for help.
+Special thanks to ptitSeb, Maxython, glibc-runner, hardray, T?aik, zhongerxll , hugo, airidosas252, .[jeezdisreez](https://github.com/Pipetto-crypto), olegos2 and others for help.
 
 [DarkOS Telegram Group](https://t.me/DARKOS4android)
 [DarkOS Discord Group](https://discord.gg/GHpzpuSebc)
