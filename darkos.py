@@ -176,6 +176,7 @@ def winetricks():
     elif choise == "1":
         exec(open(conf_path).read())
         exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
+        exec(open('/sdcard/darkos/darkos_dynarec_extra.conf').read())
         exec(open('/sdcard/darkos/darkos_custom.conf').read())
         exec(open('/sdcard/darkos/VKD3D.conf').read())
         os.system("clear")
@@ -188,6 +189,7 @@ def winetricks():
     elif choise == "2":
         exec(open(conf_path).read())
         exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
+        exec(open('/sdcard/darkos/darkos_dynarec_extra.conf').read())
         exec(open('/sdcard/darkos/darkos_custom.conf').read())
         exec(open('/sdcard/darkos/VKD3D.conf').read())
         os.system("clear")
@@ -248,6 +250,7 @@ def winetricks():
 def start_container():
     start_darkos()
     exec(open('/sdcard/darkos/darkos_dynarec.conf').read())
+    exec(open('/sdcard/darkos/darkos_dynarec_extra.conf').read())
     os.system("chmod +x $PREFIX/glibc/bin/box64")
     xrandr_output = os.popen('xrandr').read()
     current_resolution_match = re.search(r'current\s+(\d+) x (\d+)', xrandr_output)
