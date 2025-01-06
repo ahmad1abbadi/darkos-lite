@@ -757,7 +757,7 @@ def main_menu():
         print(" Restarting.....")
         time.sleep(1)
         print("")
-        subprocess.run(["bash", "darkos"])
+        exit()
     elif choice == "4":
         print("")
         os.system("clear")
@@ -766,6 +766,7 @@ def main_menu():
         print("good bye 😭")
         os.system('pkill -f "app_process / com.termux.x11"')
         os.system('pkill -f pulseaudio')
+        os.system("touch $PREFIX/bin/reboot-darkos")
         os._exit(0)
 start_darkos()
 main_menu()

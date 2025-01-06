@@ -78,8 +78,11 @@ def create_wine_prefix():
     print(f"{R}[{W}-{R}]{G}{BOLD} Recovering Savegames... {W}")
     os.system(f'rsync -a /sdcard/darkos-savegames/users/* {wine_prefix}/drive_c/users/ &>/dev/null')
     os.system(f'echo "{container}" > /sdcard/darkos/last_container_savegame')
-    subprocess.run(["bash", "darkos"])
-    exit()
+    print("")
+    print(f"{G}{BOLD} Rebooting......... {W}")
+    os.system("box64 wineserver -k &>/dev/null")
+    time.sleep(1)
+    os._exit(0)
 def start_wine():
     if os.path.exists("/sdcard/darkos/last_container_savegame"):
         with open("/sdcard/darkos/last_container_savegame", "r") as container_info:
@@ -197,6 +200,7 @@ def input_action():
             os.system('pkill -f pulseaudio')
             print(f"{G}{BOLD} exiting to the terminal goodbye {W}")
             time.sleep(2)
+            os.system("touch $PREFIX/bin/reboot-darkos")
             os._exit(0)
 def restart_program():
     extract_and_delete_tar_files()
