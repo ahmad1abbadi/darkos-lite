@@ -757,7 +757,7 @@ def main_menu():
         print(" Restarting.....")
         time.sleep(1)
         print("")
-        exit()
+        os._exit(0)
     elif choice == "4":
         print("")
         os.system("clear")
