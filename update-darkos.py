@@ -8,7 +8,7 @@ C = "\033[1;36m"
 W = "\033[1;37m"
 BOLD = "\033[1m"
 
-current_version = "0.9"
+current_version = "0.99"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def remove():
     folder_path = '/data/data/com.termux/files/home'
@@ -61,4 +61,4 @@ except urllib.error.HTTPError as e:
     os.system("mv darkos.py")
     print(f"{C} no update available {W}")
     time.sleep(3)
-os.system("python3 $PREFIX/bin/run-darkos.py")
+exit()
