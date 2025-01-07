@@ -29,6 +29,10 @@ while [[ ! -f "$PREFIX/bin/reboot-darkos" ]]; do
         fi
 
         python3 $PREFIX/bin/darkos.py $@
+        if [[ -f "$PREFIX/bin/reboot-darkos" ]];then
+            rm "$PREFIX/bin/reboot-darkos"
+            exit 0
+        fi
     elif [[ "$key" == " " ]]; then
         echo "${G}${BOLD} Booting DARKOS-lite 🖤 "${W}
     fi
