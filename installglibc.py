@@ -116,7 +116,7 @@ def install_mono():
     os.system("tar -xJf mono.tar.xz")
     os.remove("mono.tar.xz")
 def install_wine9():
-    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/extra/releases/download/wine/wine-9.3-wow64.tar.xz -O wine-default.tar.xz")
+    os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/wine-default.tar.xz")
     os.system("tar -xJf wine-default.tar.xz -C $PREFIX/glibc/opt/wine/1")
     os.remove("wine-default.tar.xz")
     os.system("apt reinstall vulkan-icd-loader-glibc -y &>/dev/null")
