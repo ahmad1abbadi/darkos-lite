@@ -487,7 +487,7 @@ def change_setting():
         change_setting()
       elif stop == "1":
         if internet_connected():
-            os.system("apt install gst* -y &>/dev/null")
+            os.system("apt-get update -y &>/dev/null; apt install gst* -y &>/dev/null")
             os.system("wget -q --show-progress https://github.com/ahmad1abbadi/darkos-lite/releases/download/lite/gstreamer.tar.xz")
             os.system("tar -xf gstreamer.tar.xz -C $PREFIX/glibc/")
             os.system("rm gstreamer.tar.xz")
