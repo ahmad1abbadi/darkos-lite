@@ -9,7 +9,7 @@ import tarfile
 import socket
 import fnmatch
 
-current_version = "0.4"
+current_version = "0.9"
 url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
 def start_darkos():
     os.system("clear")
@@ -694,6 +694,7 @@ def build_box64():
     os.system("clear")
     os.system("apt install cmake-glibc make-glibc python-glibc -y")
     os.system("pkg install -y git")
+    os.system("apt --reinstall install libssh2-glibc -y")
     os.system("rm -rf ~/box64")
     os.system(rf"unset LD_PRELOAD; export GLIBC_PREFIX=$PREFIX/glibc; export PATH=$GLIBC_PREFIX/bin:$PATH; cd ~/; git clone https://github.com/ptitSeb/box64; cd ~/box64; sed -i 's/\/usr/\/data\/data\/com.termux\/files\/usr\/glibc/g' CMakeLists.txt; sed -i 's/\/etc/\/data\/data\/com.termux\/files\/usr\/glibc\/etc/g' CMakeLists.txt; mkdir build; cd build; cmake --install-prefix $PREFIX/glibc .. -DARM_DYNAREC=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBAD_SIGNAL={badsignal} -D{sdver}=ON -DBOX32={box32}; make -j8; make install")
     os.system("rm -rf ~/box64")
