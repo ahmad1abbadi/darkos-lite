@@ -9,7 +9,7 @@ W = "\033[1;37m"
 BOLD = "\033[1m"
 
 current_version = "0.99"
-url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/currently%20version.txt'
+url = 'https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/currently%20version.txt'
 def remove():
     folder_path = '/data/data/com.termux/files/home'
     for filename in os.listdir(folder_path):
@@ -36,12 +36,12 @@ try:
     os.system("rm $PREFIX/bin/run-darkos.py")
     os.system("rm $PREFIX/bin/debug-darkos.py")
     os.system("rm $PREFIX/bin/darkos")
-    os.system("wget -O run-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/run-darkos.py")
-    os.system("wget -O darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/darkos.py")
-    os.system("wget -O darkos https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/darkos")
-    os.system("wget -O debug-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/debug-darkos.py")
-    os.system("wget -O update-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/update-darkos.py")
-    os.system("wget -O new-update.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/new-update.py")
+    os.system("wget -O run-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/run-darkos.py")
+    os.system("wget -O darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/darkos.py")
+    os.system("wget -O darkos https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/darkos")
+    os.system("wget -O debug-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/debug-darkos.py")
+    os.system("wget -O update-darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/update-darkos.py")
+    os.system("wget -O new-update.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/new-update.py")
     os.system("chmod +x darkos")
     os.system("mv update-darkos.py darkos.py run-darkos.py debug-darkos.py darkos $PREFIX/bin/")
     os.system("python3 new-update.py")
@@ -57,7 +57,7 @@ except urllib.error.HTTPError as e:
     time.sleep(2)
   else:
     os.system("rm $PREFIX/bin/darkos.py")
-    os.system("wget -O darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/darkos.py")
+    os.system("wget -O darkos.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/darkos.py")
     os.system("mv darkos.py")
     print(f"{C} no update available {W}")
     time.sleep(3)

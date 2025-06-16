@@ -16,5 +16,5 @@ while true; do
 done
 apt install python --no-install-recommends -y &>/dev/null
 echo "be patient"
-curl -o installglibc.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/installglibc.py && python3 installglibc.py
+curl -o installglibc.py https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/installglibc.py && python3 installglibc.py
 exit

@@ -15,7 +15,7 @@ for using game controller (Bluetooth/ usb) inside wine.
 
 1. Open Termux and paste the following command:
 ```bash
-curl -o install https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/main/installOS.sh && chmod +x install && ./install
+curl -o install https://raw.githubusercontent.com/ahmad1abbadi/darkos-lite/updates/installOS.sh && chmod +x install && ./install
 ```
 
 3. **DarkOS Lite** will automatically start after installation is complete.
