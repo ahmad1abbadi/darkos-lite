@@ -96,6 +96,8 @@ def start_wine():
     os.system("$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionMode:custom &>/dev/null &")
     os.system(f"$PREFIX/glibc/opt/scripts/termux-x11.sh displayResolutionCustom:{res} &>/dev/null &")
     os.system(f'box64 wine64 explorer /desktop=shell,{res} $PREFIX/glibc/opt/apps/DARKOS_configuration.exe &>/dev/null &')
+    if (sys.argv[1]):
+        os.system(f'box64 wine64 explorer /desktop=shell,{res} {sys.argv[1]} &>/dev/null &')
     time.sleep(2)
     os.system("am start -n com.termux.x11/com.termux.x11.MainActivity &>/dev/null")
     os.system("clear")
