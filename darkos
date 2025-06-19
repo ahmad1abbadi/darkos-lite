@@ -82,7 +82,7 @@ while [[ ! -f "$PREFIX/bin/reboot-darkos" ]]; do
     -e com.termux.RUN_COMMAND_BACKGROUND=false \
     -e com.termux.RUN_COMMAND_SESSION_ACTION=1 &> /dev/null
 
-    python3 $PREFIX/bin/run-darkos.py $@
+    python3 $PREFIX/bin/run-darkos.py "$@"
 done
 
 rm "$PREFIX/bin/reboot-darkos"
